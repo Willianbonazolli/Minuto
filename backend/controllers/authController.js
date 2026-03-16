@@ -7,12 +7,12 @@ async function register(req, res) {
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
-    return res.status(400).json({ message: "Missing required fields" });
+    return res.status(400).json({ message: "Campos obrigatorios ausentes" });
   }
 
   const existing = await userModel.findByEmail(email);
   if (existing) {
-    return res.status(409).json({ message: "Email already in use" });
+    return res.status(409).json({ message: "E-mail ja esta em uso" });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -29,17 +29,17 @@ async function login(req, res) {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(400).json({ message: "Missing required fields" });
+    return res.status(400).json({ message: "Campos obrigatorios ausentes" });
   }
 
   const user = await userModel.findByEmail(email);
   if (!user) {
-    return res.status(401).json({ message: "Invalid credentials" });
+    return res.status(401).json({ message: "Credenciais invalidas" });
   }
 
   const match = await bcrypt.compare(password, user.password);
   if (!match) {
-    return res.status(401).json({ message: "Invalid credentials" });
+    return res.status(401).json({ message: "Credenciais invalidas" });
   }
 
   const token = jwt.sign(
@@ -55,7 +55,7 @@ async function login(req, res) {
 }
 
 async function logout(req, res) {
-  return res.json({ message: "Logged out" });
+  return res.json({ message: "Logout realizado" });
 }
 
 module.exports = {

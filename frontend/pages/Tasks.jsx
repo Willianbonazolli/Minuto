@@ -98,7 +98,7 @@ export default function Tasks() {
         </h3>
         <div className="mt-6 space-y-4">
           <label className="block text-sm uppercase tracking-[0.2em] text-black/60">
-            Titulo
+            Título
             <input
               type="text"
               required
@@ -108,7 +108,7 @@ export default function Tasks() {
             />
           </label>
           <label className="block text-sm uppercase tracking-[0.2em] text-black/60">
-            Descricao
+            Descrição
             <textarea
               rows="4"
               value={description}
@@ -125,7 +125,7 @@ export default function Tasks() {
                 className="mt-2 w-full rounded-xl border border-black/20 px-4 py-3 text-base outline-none focus:border-black"
               >
                 <option value="pending">Pendente</option>
-                <option value="done">Concluida</option>
+                <option value="done">Concluída</option>
               </select>
             </label>
           )}
@@ -135,7 +135,7 @@ export default function Tasks() {
           type="submit"
           className="mt-6 w-full rounded-full bg-black px-4 py-3 text-sm uppercase tracking-[0.2em] text-white transition hover:bg-black/80"
         >
-          {editingId ? "Salvar alteracoes" : "Adicionar tarefa"}
+          {editingId ? "Salvar alterações" : "Adicionar tarefa"}
         </button>
         {editingId && (
           <button
@@ -163,7 +163,7 @@ export default function Tasks() {
         {loading && <p className="text-sm text-black/60">Carregando...</p>}
         {!loading && tasks.length === 0 && (
           <p className="rounded-2xl border border-dashed border-black/20 bg-white p-6 text-sm text-black/60">
-            Nenhuma tarefa ainda. Crie a primeira no formulario ao lado.
+            Nenhuma tarefa ainda. Crie a primeira no formulário ao lado.
           </p>
         )}
         <div className="space-y-4">

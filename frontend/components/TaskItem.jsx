@@ -14,7 +14,7 @@ export default function TaskItem({ task, onToggle, onDelete, onEdit }) {
           <p className="mt-2 text-sm text-black/70">{task.description}</p>
         )}
         <p className="mt-3 text-xs uppercase tracking-[0.2em] text-black/40">
-          {task.status === "done" ? "concluida" : "pendente"}
+          {task.status === "done" ? "concluída" : "pendente"}
         </p>
       </div>
       <div className="flex flex-col gap-2">

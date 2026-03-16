@@ -8,7 +8,7 @@ async function listTasks(req, res) {
 async function createTask(req, res) {
   const { title, description } = req.body;
   if (!title) {
-    return res.status(400).json({ message: "Title is required" });
+    return res.status(400).json({ message: "Titulo e obrigatorio" });
   }
 
   const taskId = await taskModel.createTask({
@@ -25,7 +25,7 @@ async function updateTask(req, res) {
   const { id } = req.params;
 
   if (!title || !status) {
-    return res.status(400).json({ message: "Title and status are required" });
+    return res.status(400).json({ message: "Titulo e status sao obrigatorios" });
   }
 
   const affected = await taskModel.updateTask({
@@ -37,10 +37,10 @@ async function updateTask(req, res) {
   });
 
   if (!affected) {
-    return res.status(404).json({ message: "Task not found" });
+    return res.status(404).json({ message: "Tarefa nao encontrada" });
   }
 
-  return res.json({ message: "Task updated" });
+  return res.json({ message: "Tarefa atualizada" });
 }
 
 async function deleteTask(req, res) {
@@ -48,10 +48,10 @@ async function deleteTask(req, res) {
 
   const affected = await taskModel.deleteTask({ id, userId: req.user.id });
   if (!affected) {
-    return res.status(404).json({ message: "Task not found" });
+    return res.status(404).json({ message: "Tarefa nao encontrada" });
   }
 
-  return res.json({ message: "Task deleted" });
+  return res.json({ message: "Tarefa removida" });
 }
 
 async function updateStatus(req, res) {
@@ -59,7 +59,7 @@ async function updateStatus(req, res) {
   const { status } = req.body;
 
   if (!status) {
-    return res.status(400).json({ message: "Status is required" });
+    return res.status(400).json({ message: "Status e obrigatorio" });
   }
 
   const affected = await taskModel.updateStatus({
@@ -69,10 +69,10 @@ async function updateStatus(req, res) {
   });
 
   if (!affected) {
-    return res.status(404).json({ message: "Task not found" });
+    return res.status(404).json({ message: "Tarefa nao encontrada" });
   }
 
-  return res.json({ message: "Status updated" });
+  return res.json({ message: "Status atualizado" });
 }
 
 module.exports = {

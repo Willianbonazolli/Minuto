@@ -4,7 +4,7 @@ export default function Header({ onNavigate, onLogout, isAuthed }) {
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-4">
         <div>
           <p className="text-sm uppercase tracking-[0.3em] text-black/40">Minuto</p>
-          <h1 className="text-2xl font-semibold">Gerenciador de tarefas</h1>
+          <h1 className="text-2xl font-semibold">Seu gerenciador de tarefas</h1>
         </div>
         <div className="flex items-center gap-3">
           {isAuthed ? (

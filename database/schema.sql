@@ -1,0 +1,20 @@
+CREATE DATABASE minuto;
+
+\c minuto;
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(150) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE tasks (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(150) NOT NULL,
+  description TEXT,
+  status VARCHAR(20) DEFAULT 'pending' CHECK (status IN ('pending', 'done')),
+  user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

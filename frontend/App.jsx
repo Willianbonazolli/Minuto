@@ -2,7 +2,7 @@ import { Suspense, lazy, useEffect, useMemo, useState } from "react";
 
 import Header from "./components/Header.jsx";
 import { activityOrder } from "./data/activityOrder.js";
-import { clearSession, getUser, isAuthenticated } from "./services/auth.js";
+import { clearSession, consumeWelcomeForUser, getUser, isAuthenticated } from "./services/auth.js";
 import { completeActivity, getCompletedActivityIds, setCompletedActivityIds } from "./services/progress.js";
 import { fetchRemoteProgress, saveRemoteProgress } from "./services/progressApi.js";
 
@@ -70,6 +70,16 @@ export default function App() {
     };
   }, [authed, user, sessionVersion]);
 
+  useEffect(() => {
+    if (!authed || !user) {
+      return;
+    }
+
+    if (consumeWelcomeForUser(user)) {
+      setShowAbout(true);
+    }
+  }, [authed, user, sessionVersion]);
+
   const handleLogout = () => {
     clearSession();
     setSessionVersion((value) => value + 1);
@@ -134,7 +144,7 @@ export default function App() {
           <div className="w-full max-w-2xl rounded-[2rem] border border-[#d9c4aa] bg-[#f6eee4] p-6 text-[#2c221b] shadow-[0_24px_80px_rgba(0,0,0,0.24)] sm:p-8">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-xs uppercase tracking-[0.3em] text-[#8d7762]">Sobre</p>
+                <p className="text-xs uppercase tracking-[0.3em] text-[#6b5440]">Sobre</p>
                 <h2 className="mt-3 text-2xl font-semibold sm:text-3xl">
                   Uma plataforma simples para aprender programação desde a base.
                 </h2>

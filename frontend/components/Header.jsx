@@ -7,7 +7,7 @@ export default function Header({ onNavigate, onLogout, onOpenAbout, isAuthed, us
         }`}
       >
         <div>
-          <p className="text-xs uppercase tracking-[0.35em] text-[#8d7762]">Minuto</p>
+          <p className="text-xs uppercase tracking-[0.35em] text-[#6b5440]">Minuto</p>
           <h1 className="mt-2 text-2xl font-semibold text-[#2c221b] sm:text-3xl">
             Mini curso de Introdução à Programação
           </h1>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { apiRequest } from "../services/api.js";
-import { setSession } from "../services/auth.js";
+import { markWelcomeForUser, setSession } from "../services/auth.js";
 
 export default function Register({ onSwitch, onSuccess }) {
   const [username, setUsername] = useState("");
@@ -44,6 +44,7 @@ export default function Register({ onSwitch, onSuccess }) {
       });
 
       setSession(loginData);
+      markWelcomeForUser(loginData.user || { username: username.trim() });
       onSuccess();
     } catch (err) {
       setError(err.message);

@@ -323,7 +323,7 @@ export default function Tasks({ user, progressVersion, onStartActivity }) {
               {user?.name ? `${user.name}, escolha sua trilha.` : "Escolha sua trilha."}
             </h2>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-[#d8ccbf]">
-              Explore sua jornada de aprendizado por trilhas e avance passo a passo.
+              Desenvolva sua jornada de aprendizado por trilhas e avance passo a passo.
             </p>
           </div>
 
@@ -375,20 +375,20 @@ export default function Tasks({ user, progressVersion, onStartActivity }) {
                   key={item.id}
                   type="button"
                   onClick={() => setSelectedItemId(item.id)}
-                  className={`interactive-row grid w-full grid-cols-[minmax(0,1fr)_90px_80px_100px] items-center gap-3 rounded-2xl px-5 py-4 text-left transition ${
+                  className={`interactive-row grid w-full grid-cols-2 gap-3 rounded-2xl px-4 py-4 text-left transition sm:grid-cols-[minmax(0,1fr)_90px_80px_100px] sm:items-center sm:px-5 ${
                     active
                       ? "bg-[#332c27] text-[#fffaf2]"
                       : "bg-[#241f1b] text-[#e4dacd] hover:bg-[#2c2622]"
                   }`}
                 >
-                  <div className="min-w-0">
+                  <div className="col-span-2 min-w-0 sm:col-span-1">
                     <p className="truncate text-base font-semibold">{item.title}</p>
                   </div>
-                  <div className="text-sm text-[#c2b09b]">{item.acceptance}</div>
-                  <div className={`text-sm font-semibold ${getDifficultyColor(item.difficulty)}`}>
+                  <div className="text-sm text-[#c2b09b] sm:text-right">{item.acceptance}</div>
+                  <div className={`text-sm font-semibold ${getDifficultyColor(item.difficulty)} sm:text-left`}>
                     {item.difficulty}
                   </div>
-                  <div className="flex justify-end">
+                  <div className="col-span-2 flex justify-start sm:col-span-1 sm:justify-end">
                     <span
                       className={`rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] ${getStatusClasses(item.status)}`}
                     >

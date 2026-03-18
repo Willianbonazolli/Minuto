@@ -4,6 +4,8 @@ const express = require("express");
 const cors = require("cors");
 
 const authRoutes = require("./routes/authRoutes");
+const progressModel = require("./models/progressModel");
+const progressRoutes = require("./routes/progressRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 
 const app = express();
@@ -20,6 +22,7 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/progress", progressRoutes);
 app.use("/api/tasks", taskRoutes);
 
 app.use((req, res) => {
@@ -36,6 +39,16 @@ app.use((error, req, res, next) => {
 });
 
 const port = process.env.PORT || 4000;
-app.listen(port, () => {
-  console.log(`Minuto backend running on port ${port}`);
+
+async function startServer() {
+  await progressModel.ensureProgressTable();
+
+  app.listen(port, () => {
+    console.log(`Minuto backend running on port ${port}`);
+  });
+}
+
+startServer().catch((error) => {
+  console.error(error);
+  process.exit(1);
 });

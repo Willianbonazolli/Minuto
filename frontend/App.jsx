@@ -3,7 +3,8 @@ import { Suspense, lazy, useEffect, useMemo, useState } from "react";
 import Header from "./components/Header.jsx";
 import { activityOrder } from "./data/activityOrder.js";
 import { clearSession, getUser, isAuthenticated } from "./services/auth.js";
-import { completeActivity } from "./services/progress.js";
+import { completeActivity, getCompletedActivityIds, setCompletedActivityIds } from "./services/progress.js";
+import { fetchRemoteProgress, saveRemoteProgress } from "./services/progressApi.js";
 
 const ActivityWorkspace = lazy(() => import("./pages/ActivityWorkspace.jsx"));
 const Login = lazy(() => import("./pages/Login.jsx"));
@@ -35,6 +36,39 @@ export default function App() {
       setView("login");
     }
   }, [authed, view]);
+
+  useEffect(() => {
+    if (!authed || !user?.id) {
+      return;
+    }
+
+    let cancelled = false;
+
+    const syncProgress = async () => {
+      try {
+        const data = await fetchRemoteProgress();
+        if (cancelled || !Array.isArray(data?.completedActivityIds)) {
+          return;
+        }
+
+        const localIds = getCompletedActivityIds(user);
+        const remoteIds = data.completedActivityIds;
+
+        if (JSON.stringify(localIds) !== JSON.stringify(remoteIds)) {
+          setCompletedActivityIds(user, remoteIds);
+          setProgressVersion((value) => value + 1);
+        }
+      } catch (error) {
+        // Keep the local cache active when the backend is temporarily unavailable.
+      }
+    };
+
+    syncProgress();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [authed, user, sessionVersion]);
 
   const handleLogout = () => {
     clearSession();
@@ -75,6 +109,9 @@ export default function App() {
 
     const completed = completeActivity(activityOrder, user, activityId);
     if (completed) {
+      saveRemoteProgress(getCompletedActivityIds(user)).catch(() => {
+        // The local cache stays valid even if the sync request fails.
+      });
       setProgressVersion((value) => value + 1);
     }
 
@@ -99,7 +136,7 @@ export default function App() {
               <div>
                 <p className="text-xs uppercase tracking-[0.3em] text-[#8d7762]">Sobre</p>
                 <h2 className="mt-3 text-2xl font-semibold sm:text-3xl">
-                  Uma plataforma simples para aprender programacao desde a base
+                  Uma plataforma simples para aprender programação desde a base.
                 </h2>
               </div>
               <button
@@ -113,13 +150,13 @@ export default function App() {
 
             <div className="mt-6 space-y-4 text-sm leading-7 text-[#5f4c3d] sm:text-base">
               <p>
-                O Minuto e uma plataforma educacional gratuita voltada ao ensino de logica e fundamentos de programacao.
+                O Minuto é uma plataforma educacional gratuita voltada ao ensino de lógica e fundamentos de programação.
               </p>
               <p>
-                Aqui o conteudo esta organizado em trilhas de HTML, CSS e JavaScript, com atividades sequenciais para voce aprender aos poucos e praticar no proprio site.
+                Aqui, o conteúdo está organizado em trilhas, com atividades sequenciais para você aprender aos poucos e praticar no próprio site.
               </p>
               <p>
-                A proposta e ajudar iniciantes a entender conceitos essenciais como estrutura de paginas, estilos, variaveis, operadores e condicionais de forma simples, visual e progressiva.
+                A proposta é ajudar iniciantes a entender conceitos essenciais, como estrutura de páginas, estilos, variáveis, operadores e condicionais, de forma simples, visual e progressiva.
               </p>
             </div>
           </div>

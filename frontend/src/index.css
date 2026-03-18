@@ -1,12 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
   color-scheme: light;
-  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-family: "Trebuchet MS", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * {
@@ -21,10 +20,39 @@ body {
   min-height: 100vh;
   margin: 0;
   background:
-    radial-gradient(circle at top left, rgba(31, 111, 235, 0.08), transparent 28%),
-    radial-gradient(circle at top right, rgba(0, 0, 0, 0.05), transparent 24%),
-    #f7f4ef;
+    radial-gradient(circle at top left, rgba(199, 154, 104, 0.16), transparent 26%),
+    radial-gradient(circle at top right, rgba(123, 143, 157, 0.12), transparent 22%),
+    linear-gradient(180deg, #f6efe7 0%, #efe4d7 100%);
   color: #111111;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20% auto auto -10%;
+  width: 32rem;
+  height: 32rem;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(231, 199, 159, 0.18) 0%, rgba(231, 199, 159, 0) 70%);
+  filter: blur(12px);
+  pointer-events: none;
+  animation: ambientFloat 18s var(--ease-out-soft) infinite alternate;
+  z-index: 0;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: auto -8% 8% auto;
+  width: 28rem;
+  height: 28rem;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(123, 143, 157, 0.14) 0%, rgba(123, 143, 157, 0) 72%);
+  filter: blur(14px);
+  pointer-events: none;
+  animation: ambientFloatReverse 22s var(--ease-out-soft) infinite alternate;
+  z-index: 0;
 }
 
 button,
@@ -36,4 +64,145 @@ textarea {
 
 #root {
   min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+::selection {
+  background: rgba(199, 154, 104, 0.28);
+  color: #2c221b;
+}
+
+.page-enter {
+  animation: pageEnter 620ms var(--ease-out-soft) both;
+}
+
+.surface-enter {
+  animation: surfaceEnter 680ms var(--ease-out-soft) both;
+}
+
+.surface-enter-delay-1 {
+  animation-delay: 80ms;
+}
+
+.surface-enter-delay-2 {
+  animation-delay: 150ms;
+}
+
+.surface-enter-delay-3 {
+  animation-delay: 220ms;
+}
+
+.interactive-card {
+  transition:
+    transform 240ms var(--ease-out-soft),
+    box-shadow 240ms var(--ease-out-soft),
+    border-color 240ms var(--ease-out-soft),
+    background-color 240ms var(--ease-out-soft);
+}
+
+.interactive-card:hover {
+  transform: translateY(-3px);
+}
+
+.interactive-row {
+  transition:
+    transform 220ms var(--ease-out-soft),
+    background-color 220ms var(--ease-out-soft),
+    box-shadow 220ms var(--ease-out-soft);
+}
+
+.interactive-row:hover {
+  transform: translateX(4px);
+}
+
+.glass-button {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 220ms var(--ease-out-soft),
+    box-shadow 220ms var(--ease-out-soft),
+    filter 220ms var(--ease-out-soft),
+    background-color 220ms var(--ease-out-soft),
+    border-color 220ms var(--ease-out-soft);
+}
+
+.glass-button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+
+.glass-button:focus-visible {
+  outline: 2px solid rgba(231, 199, 159, 0.55);
+  outline-offset: 2px;
+}
+
+.code-shell {
+  position: relative;
+}
+
+.code-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(231, 199, 159, 0.45), transparent 70%);
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes surfaceEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.99);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes ambientFloat {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(3rem, 2rem, 0) scale(1.08);
+  }
+}
+
+@keyframes ambientFloatReverse {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(-2rem, -2rem, 0) scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

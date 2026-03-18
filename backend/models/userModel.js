@@ -8,6 +8,14 @@ async function findByEmail(email) {
   return rows[0];
 }
 
+async function findByName(name) {
+  const { rows } = await db.query(
+    "SELECT * FROM users WHERE LOWER(name) = LOWER($1) LIMIT 1",
+    [name]
+  );
+  return rows[0];
+}
+
 async function findById(id) {
   const { rows } = await db.query(
     "SELECT id, name, email, created_at FROM users WHERE id = $1 LIMIT 1",
@@ -26,6 +34,7 @@ async function createUser({ name, email, password }) {
 
 module.exports = {
   findByEmail,
+  findByName,
   findById,
   createUser
 };

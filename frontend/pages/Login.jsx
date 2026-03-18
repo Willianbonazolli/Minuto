@@ -38,18 +38,18 @@ export default function Login({ onSwitch, onSuccess }) {
         <div className="inline-flex rounded-full border border-white/20 px-3 py-1 text-xs uppercase tracking-[0.25em] text-white/70">
           Plataforma gratuita
         </div>
-        <h2 className="mt-6 text-3xl font-semibold sm:text-4xl">Entre para acompanhar seu mini curso de programacao</h2>
+        <h2 className="mt-6 text-3xl font-semibold sm:text-4xl">Entre para acompanhar seu mini curso de programação.</h2>
         <p className="mt-4 max-w-lg text-white/70">
-          Estude os fundamentos de Introducao a Programacao e acompanhe seu progresso em cada modulo.
+          Aprenda no seu ritmo, acompanhe sua evolução e avance atividade por atividade.
         </p>
         <div className="mt-8 grid gap-3 sm:grid-cols-2">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <p className="text-sm font-medium">Conteudo essencial</p>
-            <p className="mt-2 text-sm text-white/60">Aprenda a base da programacao com atividades de HTML, CSS e JavaScript.</p>
+            <p className="text-sm font-medium">Conteúdo essencial</p>
+            <p className="mt-2 text-sm text-white/60">Estude os conceitos iniciais com explicações diretas e exemplos simples.</p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
             <p className="text-sm font-medium">Aprendizado pratico</p>
-            <p className="mt-2 text-sm text-white/60">Use HTML, CSS e JavaScript como base para os primeiros passos.</p>
+            <p className="mt-2 text-sm text-white/60">Pratique no próprio site e mantenha seu progresso salvo na conta.</p>
           </div>
         </div>
         <button
@@ -62,12 +62,12 @@ export default function Login({ onSwitch, onSuccess }) {
       </div>
 
       <form onSubmit={handleSubmit} className="rounded-[2rem] border border-black/10 bg-white p-8 shadow-sm">
-        <h3 className="text-2xl font-semibold">Acesse sua conta</h3>
-        <p className="mt-2 text-sm text-black/55">Use seu usuario e senha para voltar ao ambiente de estudo.</p>
+        <h3 className="text-2xl font-semibold">Acesse sua conta.</h3>
+        <p className="mt-2 text-sm text-black/55">Use seu usuário e senha para voltar ao ambiente de estudo.</p>
 
         <div className="mt-6 space-y-4">
           <label className="block text-sm uppercase tracking-[0.2em] text-black/60">
-            Usuario
+            Usuário
             <input
               type="text"
               required

@@ -1,5 +1,11 @@
 const TOKEN_KEY = "minuto_token";
 const USER_KEY = "minuto_user";
+const PROGRESS_PREFIX = "minuto_progress_";
+
+function getProgressStorageKey(user) {
+  const userId = user?.id || user?.username || user?.name || "guest";
+  return `${PROGRESS_PREFIX}${userId}`;
+}
 
 export function setSession(payload) {
   if (!payload?.token) {
@@ -10,6 +16,13 @@ export function setSession(payload) {
 
   if (payload.user) {
     localStorage.setItem(USER_KEY, JSON.stringify(payload.user));
+
+    if (Array.isArray(payload.user.completedActivityIds)) {
+      localStorage.setItem(
+        getProgressStorageKey(payload.user),
+        JSON.stringify(payload.user.completedActivityIds)
+      );
+    }
   }
 }
 

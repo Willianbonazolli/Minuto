@@ -382,13 +382,13 @@ function renderEditorCode(code, trackId, placeholder) {
 function getSubmissionStatus(isSubmitted) {
   if (isSubmitted) {
     return {
-      label: "Concluida",
+      label: "Concluída",
       classes: "border border-emerald-400/35 bg-emerald-500/12 text-emerald-300"
     };
   }
 
   return {
-    label: "Disponivel",
+    label: "Disponível",
     classes: "border border-amber-300/35 bg-amber-400/12 text-amber-200"
   };
 }
@@ -482,8 +482,8 @@ export default function ActivityWorkspace({ track, activity, onBack, onCompleteA
 
     if (completed) {
       setSubmitted(true);
-      setFeedback("Atividade enviada com sucesso. A proxima etapa foi desbloqueada.");
-      setRunFeedback("Ultima execucao: resposta pronta para envio.");
+      setFeedback("Atividade enviada com sucesso. A próxima etapa foi desbloqueada.");
+      setRunFeedback("Última execução: resposta pronta para envio.");
       return;
     }
 
@@ -583,11 +583,11 @@ export default function ActivityWorkspace({ track, activity, onBack, onCompleteA
             </div>
           ) : null}
 
-          {activeTab === "editorial" ? (
+              {activeTab === "editorial" ? (
             <div className="mt-6 space-y-4 text-sm leading-7 text-[#dfd4c8]">
               <p>Comece identificando o conceito principal desta etapa e depois reproduza a estrutura base no editor.</p>
-              <p>Monte primeiro a versao minima funcionando. Depois refine o codigo para ficar mais semantico e legivel.</p>
-              <p>Use o exemplo de referencia como guia, mas tente escrever com suas proprias palavras e estrutura.</p>
+              <p>Monte primeiro a versão mínima funcionando. Depois, refine o código para ficar mais semântico e legível.</p>
+              <p>Use o exemplo de referência como guia, mas tente escrever com suas próprias palavras e estrutura.</p>
             </div>
           ) : null}
 
@@ -624,7 +624,7 @@ export default function ActivityWorkspace({ track, activity, onBack, onCompleteA
 
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 bg-[#222222] px-4 py-3">
           <div className="space-y-1">
-            <p className="text-sm text-[#b8aa99]">Escreva sua solucao no editor e teste suas ideias antes de enviar.</p>
+            <p className="text-sm text-[#b8aa99]">Escreva sua solução no editor e teste suas ideias antes de enviar.</p>
             {runFeedback ? (
               <p className="rounded-2xl border border-amber-300/30 bg-amber-400/12 px-3 py-2 text-xs font-medium text-[#f0d6a8]">
                 {runFeedback}
@@ -644,7 +644,7 @@ export default function ActivityWorkspace({ track, activity, onBack, onCompleteA
               onClick={handleSubmit}
               className={`glass-button rounded-full bg-gradient-to-r ${track.accent} px-4 py-2 text-sm font-semibold text-[#1e1915] transition hover:opacity-90`}
             >
-              {submitted ? "Atividade concluida" : "Enviar e concluir"}
+              {submitted ? "Atividade concluída" : "Enviar e concluir"}
             </button>
           </div>
         </div>

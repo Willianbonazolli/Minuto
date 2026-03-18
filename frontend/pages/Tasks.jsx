@@ -17,14 +17,14 @@ function getDifficultyColor(difficulty) {
 
 function getStatusLabel(status) {
   if (status === "done") {
-    return "Concluida";
+    return "Concluída";
   }
 
   if (status === "locked") {
     return "Bloqueada";
   }
 
-  return "Disponivel";
+  return "Disponível";
 }
 
 function getStatusClasses(status) {
@@ -320,15 +320,15 @@ export default function Tasks({ user, progressVersion, onStartActivity }) {
           <div>
             <p className="text-xs uppercase tracking-[0.28em] text-[#c7b7a3]">Roadmaps</p>
             <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
-              {user?.name ? `${user.name}, escolha sua trilha` : "Escolha sua trilha"}
+              {user?.name ? `${user.name}, escolha sua trilha.` : "Escolha sua trilha."}
             </h2>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-[#d8ccbf]">
-              Explore sua jornada de aprendizado por trilhas e avance passo a passo em HTML, CSS e JavaScript.
+              Explore sua jornada de aprendizado por trilhas e avance passo a passo.
             </p>
           </div>
 
           <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-[#cdbdaa]">
-            3 trilhas disponiveis
+            3 trilhas disponíveis
           </div>
         </div>
 
@@ -362,7 +362,7 @@ export default function Tasks({ user, progressVersion, onStartActivity }) {
                 <p className={`text-xs uppercase tracking-[0.22em] ${currentTrack.accentText}`}>{currentTrack.label}</p>
                 <h3 className="mt-1 text-2xl font-semibold">{currentTrack.subtitle}</h3>
               </div>
-              <div className="text-sm text-[#b8aa99]">{currentTrack.items.length} atividades</div>
+              <div className="text-sm text-[#b8aa99]">{currentTrack.items.length} atividades.</div>
             </div>
           </div>
 
@@ -419,7 +419,7 @@ export default function Tasks({ user, progressVersion, onStartActivity }) {
           </div>
 
           <section className="mt-3 min-h-[7rem]">
-            <h4 className="text-lg font-semibold">Resumo rapido</h4>
+            <h4 className="text-lg font-semibold">Resumo rápido</h4>
             <p className="mt-3 text-sm leading-6 text-[#ddd1c5]">{selectedItem.summary}</p>
           </section>
 
@@ -456,12 +456,12 @@ export default function Tasks({ user, progressVersion, onStartActivity }) {
               {selectedItem.status === "done"
                 ? "Revisar atividade"
                 : selectedItem.status === "locked"
-                  ? "Desbloqueie etapas anteriores"
-                  : "Comecar atividade"}
+                  ? "Desbloqueie etapas anteriores."
+                  : "Começar atividade"}
             </button>
 
             <div className="rounded-full border border-white/10 px-4 py-3 text-sm text-[#baa997]">
-              Taxa de acerto: {selectedItem.acceptance}
+              Taxa de acerto: {selectedItem.acceptance}.
             </div>
           </div>
         </article>

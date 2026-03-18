@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+const progressModel = require("../models/progressModel");
 const userModel = require("../models/userModel");
 
 function normalizeUsername(username) {
@@ -36,7 +37,9 @@ async function register(req, res, next) {
       password: hashedPassword
     });
 
-    return res.status(201).json({ id: userId, username });
+    await progressModel.saveProgressByUser(userId, []);
+
+    return res.status(201).json({ id: userId, username, completedActivityIds: [] });
   } catch (error) {
     return next(error);
   }
@@ -73,10 +76,16 @@ async function login(req, res, next) {
     const token = jwt.sign({ id: user.id, username: user.name }, secret, {
       expiresIn: "7d"
     });
+    const completedActivityIds = await progressModel.getProgressByUser(user.id);
 
     return res.json({
       token,
-      user: { id: user.id, name: user.name, username: user.name }
+      user: {
+        id: user.id,
+        name: user.name,
+        username: user.name,
+        completedActivityIds
+      }
     });
   } catch (error) {
     return next(error);

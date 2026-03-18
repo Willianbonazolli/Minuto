@@ -9,17 +9,17 @@ export default function Header({ onNavigate, onLogout, onOpenAbout, isAuthed, us
         <div>
           <p className="text-xs uppercase tracking-[0.35em] text-[#8d7762]">Minuto</p>
           <h1 className="mt-2 text-2xl font-semibold text-[#2c221b] sm:text-3xl">
-            Mini curso de Introducao a Programacao
+            Mini curso de Introdução à Programação
           </h1>
           <p className="mt-2 max-w-2xl text-sm text-[#6f5b4a]">
-            Plataforma gratuita para estudar logica e fundamentos com HTML, CSS e JavaScript
+            Plataforma gratuita para aprender programação de forma simples, prática e progressiva.
           </p>
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           {isAuthed && user?.name ? (
             <div className="rounded-full border border-[#d7c5b2] bg-[#fbf6f0] px-4 py-2 text-sm text-[#6f5b4a]">
-              Ola, <strong className="font-semibold text-[#2c221b]">{user.name}</strong>
+              Olá, <strong className="font-semibold text-[#2c221b]">{user.name}</strong>
             </div>
           ) : null}
 

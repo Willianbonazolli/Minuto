@@ -3,37 +3,40 @@ const jwt = require("jsonwebtoken");
 
 const userModel = require("../models/userModel");
 
-function normalizeEmail(email) {
-  return String(email || "").trim().toLowerCase();
+function normalizeUsername(username) {
+  return String(username || "").trim().toLowerCase();
+}
+
+function buildEmailFromUsername(username) {
+  return `${normalizeUsername(username)}@minuto.local`;
 }
 
 async function register(req, res, next) {
   try {
-    const name = String(req.body.name || "").trim();
-    const email = normalizeEmail(req.body.email);
+    const username = String(req.body.username || req.body.name || "").trim();
     const password = String(req.body.password || "");
 
-    if (!name || !email || !password) {
-      return res.status(400).json({ message: "Nome, email e senha sao obrigatorios." });
+    if (!username || !password) {
+      return res.status(400).json({ message: "Usuario e senha sao obrigatorios." });
     }
 
     if (password.length < 6) {
       return res.status(400).json({ message: "A senha precisa ter pelo menos 6 caracteres." });
     }
 
-    const existing = await userModel.findByEmail(email);
+    const existing = await userModel.findByName(username);
     if (existing) {
-      return res.status(409).json({ message: "Este e-mail ja esta em uso." });
+      return res.status(409).json({ message: "Este usuario ja esta em uso." });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const userId = await userModel.createUser({
-      name,
-      email,
+      name: username,
+      email: buildEmailFromUsername(username),
       password: hashedPassword
     });
 
-    return res.status(201).json({ id: userId, name, email });
+    return res.status(201).json({ id: userId, username });
   } catch (error) {
     return next(error);
   }
@@ -41,14 +44,18 @@ async function register(req, res, next) {
 
 async function login(req, res, next) {
   try {
-    const email = normalizeEmail(req.body.email);
+    const username = String(req.body.username || "").trim();
+    const email = String(req.body.email || "").trim().toLowerCase();
     const password = String(req.body.password || "");
 
-    if (!email || !password) {
-      return res.status(400).json({ message: "Email e senha sao obrigatorios." });
+    if ((!username && !email) || !password) {
+      return res.status(400).json({ message: "Usuario e senha sao obrigatorios." });
     }
 
-    const user = await userModel.findByEmail(email);
+    const user = username
+      ? await userModel.findByName(username)
+      : await userModel.findByEmail(email);
+
     if (!user) {
       return res.status(401).json({ message: "Credenciais invalidas." });
     }
@@ -63,13 +70,13 @@ async function login(req, res, next) {
       throw new Error("JWT_SECRET nao configurado.");
     }
 
-    const token = jwt.sign({ id: user.id, email: user.email }, secret, {
+    const token = jwt.sign({ id: user.id, username: user.name }, secret, {
       expiresIn: "7d"
     });
 
     return res.json({
       token,
-      user: { id: user.id, name: user.name, email: user.email }
+      user: { id: user.id, name: user.name, username: user.name }
     });
   } catch (error) {
     return next(error);

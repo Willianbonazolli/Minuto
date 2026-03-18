@@ -15,7 +15,7 @@ function authMiddleware(req, res, next) {
 
   try {
     const payload = jwt.verify(token, secret);
-    req.user = { id: payload.id, email: payload.email };
+    req.user = { id: payload.id, username: payload.username };
     return next();
   } catch (error) {
     return res.status(401).json({ message: "Token invalido" });

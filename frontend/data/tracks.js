@@ -13,9 +13,9 @@ export const tracks = [
         acceptance: "96.4%",
         difficulty: "Easy",
         status: "done",
-        summary: "Monte o esqueleto minimo de um documento com `html`, `head` e `body`.",
+        summary: "Monte o esqueleto minimo de um documento com <html>, <head> e <body>.",
         theory:
-          "HTML organiza o conteudo da pagina e define a base de tudo o que aparece no navegador. Antes de pensar em estilo com CSS ou interatividade com JavaScript, voce precisa entender como um documento e montado. Nesta atividade, o foco e reconhecer o papel do `<!DOCTYPE html>`, da tag `html`, do bloco `head`, onde ficam metadados e titulo da pagina, e do `body`, onde o conteudo visivel realmente aparece.",
+          "HTML organiza o conteudo da pagina e define a base de tudo o que aparece no navegador. Antes de pensar em estilo com CSS ou interatividade com JavaScript, voce precisa entender como um documento e montado. Nesta atividade, o foco e reconhecer o papel do <!DOCTYPE html>, da tag <html>, do bloco <head>, onde ficam metadados e titulo da pagina, e do <body>, onde o conteudo visivel realmente aparece.",
         code: `<!DOCTYPE html>\n<html lang="pt-BR">\n  <head>\n    <meta charset="UTF-8" />\n    <title>Minha pagina</title>\n  </head>\n  <body>\n    <h1>Ola, mundo!</h1>\n  </body>\n</html>`,
         starterCode: `<!DOCTYPE html>\n<html lang="pt-BR">\n  <head>\n    <meta charset="UTF-8" />\n    <title>Atividade HTML</title>\n  </head>\n  <body>\n    \n  </body>\n</html>`,
         instructions: [
@@ -30,9 +30,9 @@ export const tracks = [
         acceptance: "90.1%",
         difficulty: "Easy",
         status: "done",
-        summary: "Organize informacoes com `h1` ate `h6` e `p` de forma semantica.",
+        summary: "Organize informacoes com <h1> ate <h6> e <p> de forma semantica.",
         theory:
-          "Titulos e paragrafos nao servem apenas para deixar a pagina bonita: eles ajudam o leitor a entender a ordem das informacoes. Uma boa hierarquia melhora leitura, acessibilidade e organizacao do conteudo. Nesta atividade, voce vai perceber como o `h1` representa o tema principal da pagina, enquanto subtitulos como `h2` e `h3` dividem o assunto em partes menores. Ja o `p` serve para desenvolver a explicacao de forma clara.",
+          "Titulos e paragrafos nao servem apenas para deixar a pagina bonita: eles ajudam o leitor a entender a ordem das informacoes. Uma boa hierarquia melhora leitura, acessibilidade e organizacao do conteudo. Nesta atividade, voce vai perceber como o <h1> representa o tema principal da pagina, enquanto subtitulos como <h2> e <h3> dividem o assunto em partes menores. Ja o <p> serve para desenvolver a explicacao de forma clara.",
         code: `<section>\n  <h1>Introducao a Programacao</h1>\n  <h2>Tipos primitivos</h2>\n  <p>Texto introdutorio da aula.</p>\n</section>`,
         starterCode: `<section>\n  <h1></h1>\n  <h2></h2>\n  <p></p>\n</section>`,
         instructions: [
@@ -49,7 +49,7 @@ export const tracks = [
         status: "pending",
         summary: "Crie menus e listas ordenadas para representar trilhas e etapas.",
         theory:
-          "Listas sao fundamentais na web porque ajudam a representar conjuntos de itens relacionados de forma organizada. Menus, roadmaps, sumarios e etapas de estudo costumam ser construidos com listas. Nesta atividade, voce vai entender quando usar uma lista nao ordenada (`ul`) e por que cada item deve ficar dentro de um `li`. Isso cria uma base importante para menus de navegacao e estruturas de trilha como as que aparecem em plataformas de estudo.",
+          "Listas sao fundamentais na web porque ajudam a representar conjuntos de itens relacionados de forma organizada. Menus, roadmaps, sumarios e etapas de estudo costumam ser construidos com listas. Nesta atividade, voce vai entender quando usar uma lista nao ordenada (<ul>) e por que cada item deve ficar dentro de um <li>. Isso cria uma base importante para menus de navegacao e estruturas de trilha como as que aparecem em plataformas de estudo.",
         code: `<nav>\n  <ul>\n    <li>HTML</li>\n    <li>CSS</li>\n    <li>JavaScript</li>\n  </ul>\n</nav>`,
         starterCode: `<nav>\n  <ul>\n    <li></li>\n    <li></li>\n    <li></li>\n  </ul>\n</nav>`,
         instructions: [
@@ -66,7 +66,7 @@ export const tracks = [
         status: "pending",
         summary: "Conecte paginas, ilustre conteudos e aprenda boas praticas de acessibilidade.",
         theory:
-          "Links e imagens tornam a experiencia mais rica e navegavel. Um link permite que o usuario avance entre paginas ou secoes, enquanto uma imagem ajuda a ilustrar o conteudo. Mas nao basta apenas inserir esses elementos: e importante saber escrever textos de link claros e usar o atributo `alt` nas imagens para manter a pagina acessivel. Nesta atividade, voce vai praticar como tornar a navegacao mais intuitiva e o conteudo mais compreensivel.",
+          "Links e imagens tornam a experiencia mais rica e navegavel. Um link permite que o usuario avance entre paginas ou secoes, enquanto uma imagem ajuda a ilustrar o conteudo. Mas nao basta apenas inserir esses elementos: e importante saber escrever textos de link claros e usar o atributo alt nas imagens para manter a pagina acessivel. Nesta atividade, voce vai praticar como tornar a navegacao mais intuitiva e o conteudo mais compreensivel.",
         code: `<a href="/curso/html">Abrir trilha HTML</a>\n<img src="/cover.png" alt="Capa da trilha HTML" />`,
         starterCode: `<a href=""></a>\n<img src="" alt="" />`,
         instructions: [
@@ -83,7 +83,7 @@ export const tracks = [
         status: "locked",
         summary: "Colete nome, email e respostas do aluno com campos e botoes.",
         theory:
-          "Formularios sao a principal forma de entrada de dados na web. Sempre que um usuario preenche cadastro, faz login ou responde uma atividade, existe um formulario por tras disso. Nesta atividade, voce vai entender como `label`, `input` e `button` trabalham juntos para criar uma interface clara e funcional. Tambem vai perceber que formularios bem estruturados melhoram a experiencia do usuario e evitam confusoes durante o preenchimento.",
+          "Formularios sao a principal forma de entrada de dados na web. Sempre que um usuario preenche cadastro, faz login ou responde uma atividade, existe um formulario por tras disso. Nesta atividade, voce vai entender como <label>, <input> e <button> trabalham juntos para criar uma interface clara e funcional. Tambem vai perceber que formularios bem estruturados melhoram a experiencia do usuario e evitam confusoes durante o preenchimento.",
         code: `<form>\n  <label>Nome</label>\n  <input type="text" />\n  <button>Enviar</button>\n</form>`,
         starterCode: `<form>\n  <label></label>\n  <input type="text" />\n  <button>Enviar</button>\n</form>`,
         instructions: [
@@ -117,7 +117,7 @@ export const tracks = [
         status: "locked",
         summary: "Apresente horarios, modulos e notas em linhas e colunas.",
         theory:
-          "Tabelas sao uteis quando voce precisa mostrar informacoes que se relacionam entre si em formato de grade. Horarios de aula, comparacoes e listas de desempenho sao exemplos comuns. Nesta atividade, voce vai praticar o uso de `table`, `tr`, `th` e `td` para estruturar dados com clareza.",
+          "Tabelas sao uteis quando voce precisa mostrar informacoes que se relacionam entre si em formato de grade. Horarios de aula, comparacoes e listas de desempenho sao exemplos comuns. Nesta atividade, voce vai praticar o uso de <table>, <tr>, <th> e <td> para estruturar dados com clareza.",
         code: `<table>\n  <tr>\n    <th>Modulo</th>\n    <th>Status</th>\n  </tr>\n  <tr>\n    <td>HTML</td>\n    <td>Concluido</td>\n  </tr>\n</table>`,
         starterCode: `<table>\n  <tr>\n    <th></th>\n    <th></th>\n  </tr>\n  <tr>\n    <td></td>\n    <td></td>\n  </tr>\n</table>`,
         instructions: [
@@ -134,11 +134,11 @@ export const tracks = [
         status: "locked",
         summary: "Separe cabecalho, conteudo principal e rodape com mais significado.",
         theory:
-          "HTML semantico ajuda o navegador, leitores de tela e outros desenvolvedores a entenderem a estrutura da pagina. Elementos como `header`, `main`, `section`, `article` e `footer` tornam o documento mais claro. Nesta atividade, voce vai praticar a divisao do conteudo em partes com funcao bem definida.",
+          "HTML semantico ajuda o navegador, leitores de tela e outros desenvolvedores a entenderem a estrutura da pagina. Elementos como <header>, <main>, <section>, <article> e <footer> tornam o documento mais claro. Nesta atividade, voce vai praticar a divisao do conteudo em partes com funcao bem definida.",
         code: `<header>\n  <h1>Mini curso</h1>\n</header>\n<main>\n  <section>Aulas</section>\n</main>\n<footer>Plataforma gratuita</footer>`,
         starterCode: `<header>\n  \n</header>\n<main>\n  \n</main>\n<footer>\n  \n</footer>`,
         instructions: [
-          "Use `header`, `main` e `footer` na estrutura da pagina.",
+          "Use <header>, <main> e <footer> na estrutura da pagina.",
           "Crie uma secao principal para o conteudo da aula.",
           "Mantenha a organizacao semantica e legivel."
         ]

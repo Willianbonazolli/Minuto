@@ -4,15 +4,23 @@ export function getProgressKey(user) {
 }
 
 function getOrderedIds(trackListOrIds) {
-  if (!Array.isArray(trackListOrIds) || trackListOrIds.length === 0) {
+  if (!trackListOrIds) {
     return [];
   }
 
-  if (typeof trackListOrIds[0] === "string") {
-    return trackListOrIds;
+  if (Array.isArray(trackListOrIds)) {
+    if (trackListOrIds.length === 0) {
+      return [];
+    }
+
+    if (typeof trackListOrIds[0] === "string") {
+      return [trackListOrIds];
+    }
+
+    return trackListOrIds.map((track) => track.items.map((item) => item.id));
   }
 
-  return trackListOrIds.flatMap((track) => track.items.map((item) => item.id));
+  return Object.values(trackListOrIds).filter((group) => Array.isArray(group));
 }
 
 export function getCompletedActivityIds(user) {
@@ -37,22 +45,25 @@ export function setCompletedActivityIds(user, completedActivityIds) {
 
 export function getActivityStatusMap(trackList, user) {
   const completedIds = new Set(getCompletedActivityIds(user));
-  const orderedIds = getOrderedIds(trackList);
-  const nextUnlockedIndex = orderedIds.findIndex((id) => !completedIds.has(id));
   const statusMap = {};
+  const orderedGroups = getOrderedIds(trackList);
 
-  orderedIds.forEach((id, index) => {
-    if (completedIds.has(id)) {
-      statusMap[id] = "done";
-      return;
-    }
+  orderedGroups.forEach((orderedIds) => {
+    const nextUnlockedIndex = orderedIds.findIndex((id) => !completedIds.has(id));
 
-    if (nextUnlockedIndex === -1 || index === nextUnlockedIndex) {
-      statusMap[id] = "pending";
-      return;
-    }
+    orderedIds.forEach((id, index) => {
+      if (completedIds.has(id)) {
+        statusMap[id] = "done";
+        return;
+      }
 
-    statusMap[id] = "locked";
+      if (nextUnlockedIndex === -1 || index === nextUnlockedIndex) {
+        statusMap[id] = "pending";
+        return;
+      }
+
+      statusMap[id] = "locked";
+    });
   });
 
   return statusMap;

@@ -45,7 +45,7 @@ export default function Login({ onSwitch, onSuccess }) {
         <div className="mt-8 grid gap-3 sm:grid-cols-2">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
             <p className="text-sm font-medium">Conteudo essencial</p>
-            <p className="mt-2 text-sm text-white/60">Revise tipos primitivos, constantes, operadores e condicionais.</p>
+            <p className="mt-2 text-sm text-white/60">Aprenda a base da programacao com atividades de HTML, CSS e JavaScript.</p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
             <p className="text-sm font-medium">Aprendizado pratico</p>

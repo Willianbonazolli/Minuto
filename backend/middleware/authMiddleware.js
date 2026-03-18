@@ -6,13 +6,18 @@ function authMiddleware(req, res, next) {
     return res.status(401).json({ message: "Token nao informado" });
   }
 
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    return res.status(500).json({ message: "JWT_SECRET nao configurado." });
+  }
+
   const token = authHeader.replace("Bearer ", "");
 
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    const payload = jwt.verify(token, secret);
     req.user = { id: payload.id, email: payload.email };
     return next();
-  } catch (err) {
+  } catch (error) {
     return res.status(401).json({ message: "Token invalido" });
   }
 }

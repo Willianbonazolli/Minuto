@@ -6,6 +6,7 @@ import { setSession } from "../services/auth.js";
 export default function Register({ onSwitch, onSuccess }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -15,6 +16,11 @@ export default function Register({ onSwitch, onSuccess }) {
 
     if (password.trim().length < 6) {
       setError("A senha precisa ter pelo menos 6 caracteres.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("A confirmacao de senha precisa ser igual a senha.");
       return;
     }
 
@@ -76,6 +82,18 @@ export default function Register({ onSwitch, onSuccess }) {
               className="mt-2 w-full rounded-xl border border-black/20 px-4 py-3 text-base outline-none transition focus:border-black"
             />
           </label>
+          <label className="block text-sm uppercase tracking-[0.2em] text-black/60">
+            Confirmar senha
+            <input
+              type="password"
+              required
+              minLength="6"
+              autoComplete="new-password"
+              value={confirmPassword}
+              onChange={(event) => setConfirmPassword(event.target.value)}
+              className="mt-2 w-full rounded-xl border border-black/20 px-4 py-3 text-base outline-none transition focus:border-black"
+            />
+          </label>
         </div>
 
         {error ? <p className="mt-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p> : null}
@@ -99,7 +117,7 @@ export default function Register({ onSwitch, onSuccess }) {
         </p>
         <div className="mt-8 space-y-3">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white/75">
-            Aulas organizadas por modulos com progresso de estudo.
+            Cadastro simples com usuario, senha e confirmacao de senha.
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white/75">
             Conteudos sobre entrada e saida de dados, operadores e logica condicional.

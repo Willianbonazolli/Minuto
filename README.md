@@ -1,12 +1,10 @@
 # Minuto
 
-Uma plataforma web para ensino de programação baseada em micro-atividades e progressão estruturada.
-
 ---
 
 ## Sobre o projeto
 
-O Minuto é uma proposta de um trabalho da Faculdade, onde teriamos que lecionar uma aula sobre devido tema. Minha ideia foi que aprender programação pode ser menos intimidador quando o conteúdo é dividido em pequenas partes. O nome é uma referência direta a essa proposta: atividades curtas, objetivas e que respeitam o ritmo de cada pessoa.
+A Minuto é uma proposta de um trabalho da Faculdade, onde teriamos que lecionar uma aula sobre devido tema. Minha ideia foi que aprender programação pode ser menos intimidador quando o conteúdo é dividido em pequenas partes. O nome é uma referência direta a essa proposta: atividades curtas, objetivas e que respeitam o ritmo de cada pessoa.
 
 A plataforma organiza o aprendizado em trilhas, onde cada atividade precisa ser concluída antes da próxima ser liberada.
 
@@ -66,7 +64,7 @@ minuto/ <br>
 ### Pré-requisitos
 
 - Node.js (versão 18 ou superior)
-- PostgreSQL (ou conta no Neon)
+- PostgreSQL 
 - npm ou yarn
 
 ### Passos

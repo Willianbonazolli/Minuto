@@ -1,7 +1,5 @@
 # Minuto
 
-Uma plataforma web para ensino de programação baseada em micro-atividades e progressão estruturada.
-
 ---
 
 ## Sobre o projeto

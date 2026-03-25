@@ -1,4 +1,4 @@
-export const activityOrder = {
+﻿export const activityOrder = {
   html: [
     "html-1",
     "html-2",
@@ -36,3 +36,5 @@ export const activityOrder = {
     "js-10"
   ]
 };
+
+

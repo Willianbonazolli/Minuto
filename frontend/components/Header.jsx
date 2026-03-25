@@ -1,6 +1,6 @@
-export default function Header({ onNavigate, onLogout, onOpenAbout, isAuthed, user, isCourseView }) {
+﻿export default function Header({ onNavigate, onLogout, onOpenAbout, isAuthed, user, isCourseView }) {
   return (
-    <header className="surface-enter border-b border-white/10 bg-[#141414]/90 backdrop-blur-xl">
+    <header className="surface-enter border-b border-white/10 bg-[#131313]/90 backdrop-blur-xl">
       <div
         className={`mx-auto flex w-full flex-col gap-4 px-4 py-5 sm:px-6 lg:flex-row lg:items-center lg:justify-between ${
           isCourseView ? "max-w-none" : "max-w-6xl"
@@ -9,24 +9,24 @@ export default function Header({ onNavigate, onLogout, onOpenAbout, isAuthed, us
         <div>
           <p className="text-xs uppercase tracking-[0.35em] text-[#b5b5b5]">Minuto</p>
           <h1 className="mt-2 text-2xl font-semibold text-white sm:text-3xl">
-            Mini curso de Introducao a Programacao
+            Curso de Introdução a Programação
           </h1>
-          <p className="mt-2 max-w-2xl text-sm text-[#94a3b8]">
-            Plataforma gratuita com dashboard, aulas guiadas e laboratorio com preview ao vivo.
+          <p className="mt-2 max-w-2xl text-sm text-[#9f9f9f]">
+            Plataforma gratuita com aulas teÃ³ricas e exercÃ­cios prÃ¡ticos para iniciantes.
           </p>
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           {isAuthed && user?.name ? (
-            <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-[#cbd5e1]">
-              Ola, <strong className="font-semibold text-white">{user.name}</strong>
+            <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-[#cfcfcf]">
+              OlÃ¡, <strong className="font-semibold text-white">{user.name}</strong>
             </div>
           ) : null}
 
           <div className="flex items-center gap-3">
             <button
               type="button"
-              className="glass-button rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-[#dbeafe] transition hover:bg-white/10"
+              className="glass-button rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-[#d1d1d1] transition hover:bg-white/10"
               onClick={onOpenAbout}
             >
               Sobre
@@ -36,14 +36,14 @@ export default function Header({ onNavigate, onLogout, onOpenAbout, isAuthed, us
               <>
                 <button
                   type="button"
-                  className="glass-button rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-[#dbeafe] transition hover:bg-white/10"
+                  className="glass-button rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-[#d1d1d1] transition hover:bg-white/10"
                   onClick={() => onNavigate("tasks")}
                 >
                   Meus cursos
                 </button>
                 <button
                   type="button"
-                  className="glass-button rounded-full bg-gradient-to-r from-[#38bdf8] to-[#2563eb] px-4 py-2 text-sm text-white transition hover:opacity-95"
+                  className="glass-button rounded-full bg-gradient-to-r from-[#393939] to-[#4C4C4C] px-4 py-2 text-sm text-white transition hover:opacity-95"
                   onClick={onLogout}
                 >
                   Sair
@@ -53,14 +53,14 @@ export default function Header({ onNavigate, onLogout, onOpenAbout, isAuthed, us
               <>
                 <button
                   type="button"
-                  className="glass-button rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-[#dbeafe] transition hover:bg-white/10"
+                  className="glass-button rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-[#d1d1d1] transition hover:bg-white/10"
                   onClick={() => onNavigate("login")}
                 >
                   Entrar
                 </button>
                 <button
                   type="button"
-                  className="glass-button rounded-full bg-gradient-to-r from-[#38bdf8] to-[#2563eb] px-4 py-2 text-sm text-white transition hover:opacity-95"
+                  className="glass-button rounded-full bg-gradient-to-r from-[#393939] to-[#4C4C4C] px-4 py-2 text-sm text-white transition hover:opacity-95"
                   onClick={() => onNavigate("register")}
                 >
                   Criar conta
@@ -73,3 +73,8 @@ export default function Header({ onNavigate, onLogout, onOpenAbout, isAuthed, us
     </header>
   );
 }
+
+
+
+
+

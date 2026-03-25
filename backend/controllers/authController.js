@@ -12,6 +12,22 @@ function buildEmailFromUsername(username) {
   return `${normalizeUsername(username)}@minuto.local`;
 }
 
+function isValidUsername(username) {
+  return /^[a-zA-Z0-9._-]{3,30}$/.test(username);
+}
+
+function getCookieOptions() {
+  const isProduction = process.env.NODE_ENV === "production";
+
+  return {
+    httpOnly: true,
+    sameSite: isProduction ? "none" : "lax",
+    secure: isProduction,
+    path: "/",
+    maxAge: 7 * 24 * 60 * 60 * 1000
+  };
+}
+
 async function register(req, res, next) {
   try {
     const username = String(req.body.username || req.body.name || "").trim();
@@ -19,6 +35,12 @@ async function register(req, res, next) {
 
     if (!username || !password) {
       return res.status(400).json({ message: "Usuario e senha sao obrigatorios." });
+    }
+
+    if (!isValidUsername(username)) {
+      return res.status(400).json({
+        message: "Usuario invalido. Use entre 3 e 30 caracteres (letras, numeros, ponto, hifen ou underline)."
+      });
     }
 
     if (password.length < 6) {
@@ -55,6 +77,12 @@ async function login(req, res, next) {
       return res.status(400).json({ message: "Usuario e senha sao obrigatorios." });
     }
 
+    if (username && !isValidUsername(username)) {
+      return res.status(400).json({
+        message: "Usuario invalido. Use entre 3 e 30 caracteres (letras, numeros, ponto, hifen ou underline)."
+      });
+    }
+
     const user = username
       ? await userModel.findByName(username)
       : await userModel.findByEmail(email);
@@ -77,9 +105,9 @@ async function login(req, res, next) {
       expiresIn: "7d"
     });
     const completedActivityIds = await progressModel.getProgressByUser(user.id);
+    res.cookie("minuto_token", token, getCookieOptions());
 
     return res.json({
-      token,
       user: {
         id: user.id,
         name: user.name,
@@ -93,6 +121,12 @@ async function login(req, res, next) {
 }
 
 async function logout(req, res) {
+  res.clearCookie("minuto_token", {
+    httpOnly: true,
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/"
+  });
   return res.json({ message: "Logout realizado." });
 }
 

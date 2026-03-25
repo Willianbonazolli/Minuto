@@ -1,8 +1,9 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4001";
+﻿const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4001";
 
 export async function apiRequest(path, options = {}) {
   try {
     const res = await fetch(`${API_URL}${path}`, {
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         ...(options.headers || {})
@@ -26,3 +27,5 @@ export async function apiRequest(path, options = {}) {
     throw new Error("Falha de conexao com o servidor.");
   }
 }
+
+

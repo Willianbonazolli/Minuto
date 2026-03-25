@@ -1,5 +1,18 @@
 const db = require("./db");
 
+async function ensureTasksTable() {
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS tasks (
+      id SERIAL PRIMARY KEY,
+      title VARCHAR(150) NOT NULL,
+      description TEXT,
+      status VARCHAR(20) DEFAULT 'pending' CHECK (status IN ('pending', 'done')),
+      user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+}
+
 async function getTasksByUser(userId) {
   const { rows } = await db.query(
     "SELECT id, title, description, status, created_at FROM tasks WHERE user_id = $1 ORDER BY created_at DESC",
@@ -41,6 +54,7 @@ async function updateStatus({ id, userId, status }) {
 }
 
 module.exports = {
+  ensureTasksTable,
   getTasksByUser,
   createTask,
   updateTask,

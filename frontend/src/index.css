@@ -1,4 +1,4 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -6,12 +6,12 @@
   color-scheme: dark;
   font-family: "Sora", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
-  --bg-deep: #020617;
-  --bg-surface: #081121;
-  --bg-panel: #0f172a;
-  --border-soft: rgba(148, 163, 184, 0.16);
+  --bg-deep: #000000;
+  --bg-surface: #131313;
+  --bg-panel: #262626;
+  --border-soft: rgba(76, 76, 76, 0.45);
   --text-main: #f8fafc;
-  --text-soft: #94a3b8;
+  --text-soft: #9f9f9f;
 }
 
 * {
@@ -29,7 +29,7 @@ body {
     radial-gradient(circle at top left, rgba(80, 80, 80, 0.22), transparent 22%),
     radial-gradient(circle at top right, rgba(60, 60, 60, 0.22), transparent 24%),
     radial-gradient(circle at bottom center, rgba(20, 20, 20, 0.75), transparent 42%),
-    linear-gradient(180deg, #000000 0%, #141414 48%, #282828 100%);
+    linear-gradient(180deg, #000000 0%, #131313 48%, #262626 100%);
   color: var(--text-main);
   overflow-x: hidden;
 }
@@ -76,7 +76,7 @@ textarea {
 }
 
 ::selection {
-  background: rgba(56, 189, 248, 0.32);
+  background: rgba(76, 76, 76, 0.45);
   color: white;
 }
 
@@ -140,7 +140,7 @@ textarea {
 }
 
 .glass-button:focus-visible {
-  outline: 2px solid rgba(56, 189, 248, 0.55);
+  outline: 2px solid rgba(76, 76, 76, 0.85);
   outline-offset: 2px;
 }
 
@@ -154,7 +154,7 @@ textarea {
   inset: 0 auto auto 0;
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, rgba(56, 189, 248, 0.35), transparent 70%);
+  background: linear-gradient(90deg, rgba(76, 76, 76, 0.55), transparent 70%);
 }
 
 @keyframes pageEnter {
@@ -213,3 +213,6 @@ textarea {
     transition: none !important;
   }
 }
+
+
+

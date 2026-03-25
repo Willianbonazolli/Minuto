@@ -1,4 +1,4 @@
-export function getProgressKey(user) {
+﻿export function getProgressKey(user) {
   const userId = user?.id || user?.username || user?.name || "guest";
   return `minuto_progress_${userId}`;
 }
@@ -93,3 +93,5 @@ export function completeActivity(trackList, user, activityId) {
   localStorage.setItem(getProgressKey(user), JSON.stringify([...completedIds]));
   return true;
 }
+
+

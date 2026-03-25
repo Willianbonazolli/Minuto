@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 
 import { apiRequest } from "../services/api.js";
 import { setSession } from "../services/auth.js";
@@ -39,36 +39,36 @@ export default function Login({ onSwitch, onSuccess }) {
           Plataforma gratuita
         </div>
         <h2 className="mt-6 text-3xl font-semibold sm:text-4xl">
-          Entre para acompanhar seu mini curso de programacao.
+          Entre para acompanhar seu progresso.
         </h2>
-        <p className="mt-4 max-w-lg text-[#cbd5e1]">
-          Aprenda no seu ritmo, acompanhe sua evolucao e avance atividade por atividade em um ambiente de estudo mais moderno.
+        <p className="mt-4 max-w-lg text-[#cfcfcf]">
+          Aprenda no seu ritmo, acompanhe sua evoluÃ§Ã£o e avance atividade por atividade em um ambiente de estudo mais moderno.
         </p>
         <div className="mt-8 grid gap-3 sm:grid-cols-2">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
             <p className="text-sm font-medium text-white">Dashboard de progresso</p>
-            <p className="mt-2 text-sm text-[#cbd5e1]">Veja seus modulos, aulas concluidas e o proximo passo da trilha.</p>
+            <p className="mt-2 text-sm text-[#cfcfcf]">Veja seus modulos, aulas concluidas e proximas aulas.</p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <p className="text-sm font-medium text-white">Laboratorio com preview</p>
-            <p className="mt-2 text-sm text-[#cbd5e1]">Edite o codigo e acompanhe o resultado ao vivo na mesma tela.</p>
+            <p className="text-sm font-medium text-white">Editor de cÃ³digo personalizado</p>
+            <p className="mt-2 text-sm text-[#cfcfcf]">Acompanhe o resultado ao vivo na mesma tela.</p>
           </div>
         </div>
         <button
           type="button"
           onClick={onSwitch}
-          className="mt-8 w-full rounded-full bg-gradient-to-r from-[#3da9fc] to-[#2563eb] px-4 py-3 text-sm uppercase tracking-[0.2em] text-white transition hover:opacity-95 sm:w-auto sm:min-w-[18rem]"
+          className="mt-8 w-full rounded-full bg-gradient-to-r from-[#393939] to-[#4C4C4C] px-4 py-3 text-sm uppercase tracking-[0.2em] text-white transition hover:opacity-95 sm:w-auto sm:min-w-[18rem]"
         >
           Quero me cadastrar
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="rounded-[2rem] border border-white/10 bg-[#081121]/95 p-8 text-white shadow-[0_24px_80px_rgba(2,6,23,0.42)]">
+      <form onSubmit={handleSubmit} className="rounded-[2rem] border border-white/10 bg-[#131313]/95 p-8 text-white shadow-[0_24px_80px_rgba(2,6,23,0.42)]">
         <h3 className="text-2xl font-semibold">Acesse sua conta.</h3>
-        <p className="mt-2 text-sm text-[#94a3b8]">Use seu usuario e senha para voltar ao ambiente de estudo.</p>
+        <p className="mt-2 text-sm text-[#9f9f9f]">Use seu usuario e senha para voltar ao ambiente de estudo.</p>
 
         <div className="mt-6 space-y-4">
-          <label className="block text-sm uppercase tracking-[0.2em] text-[#94a3b8]">
+          <label className="block text-sm uppercase tracking-[0.2em] text-[#9f9f9f]">
             Usuario
             <input
               type="text"
@@ -76,10 +76,10 @@ export default function Login({ onSwitch, onSuccess }) {
               autoComplete="username"
               value={username}
               onChange={(event) => setUsername(event.target.value)}
-              className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-base text-white outline-none transition focus:border-sky-400/40"
+              className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-base text-white outline-none transition focus:border-[#4C4C4C]"
             />
           </label>
-          <label className="block text-sm uppercase tracking-[0.2em] text-[#94a3b8]">
+          <label className="block text-sm uppercase tracking-[0.2em] text-[#9f9f9f]">
             Senha
             <input
               type="password"
@@ -87,22 +87,22 @@ export default function Login({ onSwitch, onSuccess }) {
               autoComplete="current-password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-base text-white outline-none transition focus:border-sky-400/40"
+              className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-base text-white outline-none transition focus:border-[#4C4C4C]"
             />
           </label>
         </div>
 
-        {error ? <p className="mt-4 rounded-xl bg-rose-400/10 px-4 py-3 text-sm text-rose-200">{error}</p> : null}
+        {error ? <p className="mt-4 rounded-xl bg-[#393939]/35 px-4 py-3 text-sm text-[#d1d1d1]">{error}</p> : null}
 
         <button
           type="submit"
           disabled={loading}
-          className="mt-6 w-full rounded-full bg-gradient-to-r from-[#38bdf8] to-[#2563eb] px-4 py-3 text-sm uppercase tracking-[0.2em] text-white transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
+          className="mt-6 w-full rounded-full bg-gradient-to-r from-[#393939] to-[#4C4C4C] px-4 py-3 text-sm uppercase tracking-[0.2em] text-white transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {loading ? "Entrando..." : "Entrar"}
         </button>
 
-        <div className="mt-5 text-center text-sm text-[#94a3b8]">
+        <div className="mt-5 text-center text-sm text-[#9f9f9f]">
           Ainda nao tem conta?{" "}
           <button
             type="button"
@@ -116,3 +116,8 @@ export default function Login({ onSwitch, onSuccess }) {
     </section>
   );
 }
+
+
+
+
+

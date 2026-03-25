@@ -27,11 +27,11 @@ function getLanguageLabel(track) {
 function getHintSnippet(track, activity) {
   if (track.id === "html") {
     if (activity.id === "html-1") {
-      return "<!DOCTYPE html>\n<html lang=\"pt-BR\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Minha pagina</title>\n  </head>\n  <body>\n    <h1>Ola, mundo!</h1>\n  </body>\n</html>";
+      return "<!DOCTYPE html>\n<html lang=\"pt-BR\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Minha página</title>\n  </head>\n  <body>\n    <h1>Olá, mundo!</h1>\n  </body>\n</html>";
     }
 
     if (activity.id === "html-2") {
-      return "<h1>Titulo principal</h1>\n<h2>Subtitulo</h2>\n<p>Um paragrafo curto.</p>";
+      return "<h1>Título principal</h1>\n<h2>Subtítulo</h2>\n<p>Um parágrafo curto.</p>";
     }
 
     return activity.starterCode || "<section>\n  <!-- organize sua estrutura aqui -->\n</section>";
@@ -41,7 +41,7 @@ function getHintSnippet(track, activity) {
     return activity.starterCode || "body {\n  color: #ffffff;\n}";
   }
 
-  return activity.starterCode || 'console.log("Ola, mundo!");';
+  return activity.starterCode || 'console.log("Olá, mundo!");';
 }
 
 function renderHtmlToken(part, key) {
@@ -256,7 +256,7 @@ function renderCode(code, trackId, placeholder = "") {
 function getSubmissionStatus(isSubmitted) {
   if (isSubmitted) {
     return {
-      label: "Concluida",
+      label: "Concluída",
       classes: "border border-emerald-400/20 bg-emerald-400/10 text-emerald-200"
     };
   }
@@ -295,7 +295,7 @@ function buildPreviewDocument(trackId, code) {
     </style>
   </head>
   <body>
-    <div class="empty">Escreva seu codigo para ver o preview ao vivo.</div>
+    <div class="empty">Escreva seu código para ver o preview ao vivo.</div>
   </body>
 </html>`;
   }
@@ -337,8 +337,8 @@ function buildPreviewDocument(trackId, code) {
     <div class="card">
       <p>Preview CSS</p>
       <h1>Seu estilo aparece aqui</h1>
-      <p>Use esta area para testar cores, espacamento, tipografia e layout.</p>
-      <button>Botao de exemplo</button>
+      <p>Use esta área para testar cores, espaçamento, tipografia e layout.</p>
+      <button>Botão de exemplo</button>
     </div>
   </body>
 </html>`;
@@ -369,7 +369,7 @@ function buildPreviewDocument(trackId, code) {
   </head>
   <body>
     <h1>Preview JavaScript</h1>
-    <p>Use <strong>console.log</strong> para ver as saidas abaixo.</p>
+    <p>Use <strong>console.log</strong> para ver as saídas abaixo.</p>
     <div id="console" class="console">Console pronto.</div>
     <script>
       const consoleElement = document.getElementById("console");
@@ -391,17 +391,42 @@ function buildPreviewDocument(trackId, code) {
 function getNextLabel(track, activity) {
   const currentIndex = track.items.findIndex((item) => item.id === activity.id);
   if (currentIndex === -1 || currentIndex === track.items.length - 1) {
-    return "Ultima aula deste modulo";
+    return "Última atividade deste módulo";
   }
 
-  return `Proxima aula: ${track.items[currentIndex + 1].title}`;
+  return `Próxima atividade: ${track.items[currentIndex + 1].title}`;
+}
+
+function splitSentences(text) {
+  return String(text || "")
+    .split(/(?<=[.!?])\s+/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function getLearningBlocks(activity) {
+  const sentences = splitSentences(activity.theory);
+  const concept = sentences[0] || activity.summary;
+  const importance = sentences[1] || "Você vai entender como esse conceito aparece em situações reais.";
+  const outcome = activity.instructions?.length
+    ? `Ao final, você entrega: ${activity.instructions.slice(0, 2).join(" ")}`
+    : "Ao final, você entrega uma solução funcional para a atividade.";
+
+  return { concept, importance, outcome };
 }
 
 function getInstructionGuide(activity) {
+  const lastIndex = (activity.instructions || []).length - 1;
+
   return (activity.instructions || []).map((instruction, index) => ({
     title: `Atividade ${index + 1}`,
     instruction,
-    explanation: `Nesta etapa, voce vai praticar "${instruction.replace(/\.$/, "").toLowerCase()}". O objetivo e fixar a base de ${activity.title.toLowerCase()} com um exemplo simples e direto.`
+    explanation:
+      index === 0
+        ? "Comece por esta etapa para montar uma base sólida da solução."
+        : index === lastIndex
+          ? "Finalize esta etapa e valide no preview para garantir que o resultado está correto."
+          : "Com a base pronta, avance neste passo para consolidar o aprendizado da aula."
   }));
 }
 
@@ -414,6 +439,7 @@ export default function ActivityWorkspace({ track, activity, onBack, onCompleteA
   const editorRef = useRef(null);
   const previewDocument = useMemo(() => buildPreviewDocument(track.id, editorValue), [editorValue, track.id]);
   const instructionGuide = useMemo(() => getInstructionGuide(activity), [activity]);
+  const learningBlocks = useMemo(() => getLearningBlocks(activity), [activity]);
 
   const lessonIndex = useMemo(
     () => track.items.findIndex((item) => item.id === activity.id) + 1,
@@ -431,7 +457,7 @@ export default function ActivityWorkspace({ track, activity, onBack, onCompleteA
   );
 
   const tabs = [
-    { id: "overview", label: "Visao geral" },
+    { id: "overview", label: "Visão geral" },
     { id: "notes", label: "Guia da aula" }
   ];
 
@@ -450,11 +476,11 @@ export default function ActivityWorkspace({ track, activity, onBack, onCompleteA
 
     if (completed) {
       setSubmitted(true);
-      setFeedback("Atividade concluida com sucesso. A proxima aula foi liberada.");
+      setFeedback("Atividade concluída com sucesso. A próxima atividade foi liberada.");
       return;
     }
 
-    setFeedback("Nao foi possivel concluir esta atividade agora.");
+    setFeedback("Não foi possível concluir esta atividade agora.");
   };
 
   const handleEditorKeyDown = (event) => {
@@ -534,7 +560,6 @@ export default function ActivityWorkspace({ track, activity, onBack, onCompleteA
 
             <div className="mt-6 overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#000000]">
               <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 text-xs uppercase tracking-[0.2em] text-[#94a3b8]">
-                <span>Aula estilo player</span>
                 <span>{getNextLabel(track, activity)}</span>
               </div>
               <div className="grid min-h-[18rem] place-items-center bg-[radial-gradient(circle_at_top,rgba(80,80,80,0.16),transparent_45%),linear-gradient(180deg,#141414_0%,#000000_100%)] p-8">
@@ -544,12 +569,12 @@ export default function ActivityWorkspace({ track, activity, onBack, onCompleteA
                       {lessonIndex}
                     </div>
                     <div>
-                      <p className="text-sm uppercase tracking-[0.22em] text-[#b5b5b5]">Resumo da atividade</p>
+                      <p className="text-sm uppercase tracking-[0.22em] text-[#b5b5b5]">Objetivo da atividade</p>
                       <h2 className="mt-2 text-2xl font-semibold text-white">{activity.title}</h2>
                     </div>
                   </div>
                   <p className="mt-5 max-w-2xl text-sm leading-7 text-[#cbd5e1]">
-                    {activity.summary}
+                    {learningBlocks.importance}
                   </p>
                 </div>
               </div>
@@ -577,8 +602,21 @@ export default function ActivityWorkspace({ track, activity, onBack, onCompleteA
             {activeTab === "overview" ? (
               <div className="mt-6 space-y-8">
                 <section className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
-                  <h2 className="text-lg font-semibold text-white">O que voce vai aprender</h2>
-                  <p className="mt-3 text-sm leading-7 text-[#cbd5e1]">{activity.theory}</p>
+                  <h2 className="text-lg font-semibold text-white">O que você vai aprender</h2>
+                  <div className="mt-4 grid gap-3">
+                    <div className="rounded-2xl border border-white/10 bg-[#1a1a1a]/70 px-4 py-4">
+                      <p className="text-xs uppercase tracking-[0.16em] text-[#94a3b8]">Conceito-chave</p>
+                      <p className="mt-2 text-sm leading-7 text-[#dbe7ff]">{learningBlocks.concept}</p>
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-[#1a1a1a]/70 px-4 py-4">
+                      <p className="text-xs uppercase tracking-[0.16em] text-[#94a3b8]">Por que isso importa</p>
+                      <p className="mt-2 text-sm leading-7 text-[#dbe7ff]">{learningBlocks.importance}</p>
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-[#1a1a1a]/70 px-4 py-4">
+                      <p className="text-xs uppercase tracking-[0.16em] text-[#94a3b8]">Resultado esperado</p>
+                      <p className="mt-2 text-sm leading-7 text-[#dbe7ff]">{learningBlocks.outcome}</p>
+                    </div>
+                  </div>
                 </section>
 
                 <section className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
@@ -621,7 +659,7 @@ export default function ActivityWorkspace({ track, activity, onBack, onCompleteA
                 </section>
 
                 <section className="rounded-[1.5rem] border border-white/10 bg-[#000000] p-5">
-                  <h2 className="text-lg font-semibold text-white">Snippet de referencia</h2>
+                  <h2 className="text-lg font-semibold text-white">Snippet de referência</h2>
                   <pre className="mt-4 overflow-auto rounded-2xl border border-white/8 bg-[#141414] p-4 text-sm leading-7 text-[#e2e8f0]">
                     {renderCode(getHintSnippet(track, activity), track.id)}
                   </pre>
@@ -643,13 +681,13 @@ export default function ActivityWorkspace({ track, activity, onBack, onCompleteA
               />
             </div>
             <p className="mt-3 text-sm text-[#e5e7eb]">
-              {completedLessons}/{track.items.length} aulas concluidas
+              {completedLessons}/{track.items.length} atividades concluídas
             </p>
           </div>
 
           <div className="rounded-[2rem] border border-white/10 bg-[#141414]/95 p-4 shadow-[0_24px_80px_rgba(0,0,0,0.42)]">
             <div className="flex items-center justify-between px-2 py-2">
-              <h3 className="text-lg font-semibold text-white">Playlist da trilha</h3>
+              <h3 className="text-lg font-semibold text-white">Atividades da trilha</h3>
               <span className="text-xs uppercase tracking-[0.22em] text-[#64748b]">Academy</span>
             </div>
             <div className="mt-2 space-y-2">
@@ -681,7 +719,7 @@ export default function ActivityWorkspace({ track, activity, onBack, onCompleteA
                       <div className="min-w-0">
                         <p className="truncate text-sm font-semibold text-white">{item.title}</p>
                         <p className="mt-1 text-xs text-[#94a3b8]">
-                          {done ? "Concluida" : item.status === "locked" ? "Bloqueada" : "Disponivel"}
+                          {done ? "Concluída" : item.status === "locked" ? "Bloqueada" : "Disponível"}
                         </p>
                       </div>
                     </div>
@@ -699,7 +737,7 @@ export default function ActivityWorkspace({ track, activity, onBack, onCompleteA
             <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-black">
               {track.label}
             </span>
-            <span className="text-sm text-[#cbd5e1]">Laboratorio com preview ao vivo</span>
+            <span className="text-sm text-[#cbd5e1]">Laboratório com preview ao vivo</span>
           </div>
         </div>
 

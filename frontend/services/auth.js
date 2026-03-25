@@ -1,5 +1,4 @@
-const TOKEN_KEY = "minuto_token";
-const USER_KEY = "minuto_user";
+﻿const USER_KEY = "minuto_user";
 const PROGRESS_PREFIX = "minuto_progress_";
 const WELCOME_PREFIX = "minuto_welcome_";
 
@@ -14,12 +13,6 @@ function getWelcomeStorageKey(user) {
 }
 
 export function setSession(payload) {
-  if (!payload?.token) {
-    return;
-  }
-
-  localStorage.setItem(TOKEN_KEY, payload.token);
-
   if (payload.user) {
     localStorage.setItem(USER_KEY, JSON.stringify(payload.user));
 
@@ -30,10 +23,6 @@ export function setSession(payload) {
       );
     }
   }
-}
-
-export function getToken() {
-  return localStorage.getItem(TOKEN_KEY);
 }
 
 export function getUser() {
@@ -66,10 +55,11 @@ export function consumeWelcomeForUser(user) {
 }
 
 export function isAuthenticated() {
-  return Boolean(getToken());
+  return Boolean(getUser());
 }
 
 export function clearSession() {
-  localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
 }
+
+

@@ -28,12 +28,12 @@ O progresso é salvo automaticamente, permitindo que o usuário retorne a qualqu
 
 ## Tecnologias utilizadas
 
-| Frontend | React com Vite |
-| Estilização | Tailwind CSS |
-| Backend | Node.js com Express |
-| Banco de dados | PostgreSQL |
-| Autenticação | JWT |
-| Deploy | Vercel (frontend) + Railway (backend) + Neon (banco de dados) |
+| Frontend | React com Vite | <br>
+| Estilização | Tailwind CSS | <br>
+| Backend | Node.js com Express | <br>
+| Banco de dados | PostgreSQL | <br>
+| Autenticação | JWT | <br>
+| Deploy | Vercel (frontend) + Railway (backend) + Neon (banco de dados) | <br>
 
 ---
 
@@ -42,8 +42,8 @@ minuto/ <br>
 ├── frontend/ <br>
 │ ├── src/ <br>
 │ │ ├── components/<br>
-│ │ ├── pages/
-│ │ ├── services/
+│ │ ├── pages/<br>
+│ │ ├── services/ <br>
 │ │ └── styles/<br>
 │ ├── index.html <br> 
 │ └── package.json <br>
@@ -51,8 +51,8 @@ minuto/ <br>
 ├── backend/ <br>
 │ ├── src/ <br>
 │ │ ├── controllers/<br>
-│ │ ├── models/
-│ │ ├── routes/
+│ │ ├── models/ <br>
+│ │ ├── routes/ <br>
 │ │ └── middleware/<br>
 │ ├── migrations/ <br> 
 │ └── package.json <br>

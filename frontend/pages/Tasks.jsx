@@ -1,470 +1,142 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { tracks } from "../data/tracks.js";
 import { getTracksWithProgress } from "../services/progress.js";
 
-function getDifficultyColor(difficulty) {
-  if (difficulty === "Easy") {
-    return "text-[#9fcfc0]";
-  }
+function getTrackStats(track) {
+  const total = track.items.length;
+  const completed = track.items.filter((item) => item.status === "done").length;
 
-  if (difficulty === "Hard") {
-    return "text-[#d79486]";
-  }
-
-  return "text-[#d7ba83]";
+  return {
+    total,
+    completed,
+    percent: total ? Math.round((completed / total) * 100) : 0
+  };
 }
 
-function getStatusLabel(status) {
-  if (status === "done") {
-    return "Concluída";
+function getTrackIconClasses(trackId) {
+  if (trackId === "html") {
+    return "bg-[#E34F26] text-white";
   }
 
-  if (status === "locked") {
-    return "Bloqueada";
-  }
-
-  return "Disponível";
-}
-
-function getStatusClasses(status) {
-  if (status === "done") {
-    return "border border-emerald-400/35 bg-emerald-500/12 text-emerald-300";
-  }
-
-  if (status === "locked") {
-    return "border border-rose-400/30 bg-rose-500/12 text-rose-300";
-  }
-
-  return "border border-amber-300/35 bg-amber-400/12 text-amber-200";
-}
-
-function renderHtmlTag(part, key) {
-  if (/^\s*<!DOCTYPE/i.test(part)) {
-    const match = part.match(/^(\s*)(<!DOCTYPE)(\s+)(html)(>)$/i);
-
-    if (!match) {
-      return (
-        <span key={key} className="text-[#9cdcfe]">
-          {part}
-        </span>
-      );
-    }
-
-    return (
-      <span key={key}>
-        <span className="text-[#e9ddcf]">{match[1]}</span>
-        <span className="text-[#c586c0]">{match[2]}</span>
-        <span className="text-[#e9ddcf]">{match[3]}</span>
-        <span className="text-[#4ec9b0]">{match[4]}</span>
-        <span className="text-[#808080]">{match[5]}</span>
-      </span>
-    );
-  }
-
-  const leadingSpace = part.match(/^\s*/)?.[0] || "";
-  const trimmed = part.trim();
-  const isClosing = trimmed.startsWith("</");
-  const isSelfClosing = trimmed.endsWith("/>");
-  const tagMatch = trimmed.match(/^<\/?([^\s/>]+)(.*?)(\/?)>$/);
-
-  if (!tagMatch) {
-    return (
-      <span key={key} className="text-[#9cdcfe]">
-        {part}
-      </span>
-    );
-  }
-
-  const [, tagName, rawAttributes, selfClosingMarker] = tagMatch;
-  const attributes = [];
-  const attributeRegex = /([:@\w-]+)(=)("[^"]*"|'[^']*')?/g;
-  let attrMatch;
-
-  while ((attrMatch = attributeRegex.exec(rawAttributes)) !== null) {
-    attributes.push({
-      name: attrMatch[1],
-      equal: attrMatch[2] || "",
-      value: attrMatch[3] || ""
-    });
-  }
-
-  return (
-    <span key={key}>
-      <span className="text-[#e9ddcf]">{leadingSpace}</span>
-      <span className="text-[#808080]">{isClosing ? "</" : "<"}</span>
-      <span className="text-[#569cd6]">{tagName}</span>
-      {attributes.map((attribute, index) => (
-        <span key={`${key}-attr-${index}`}>
-          <span className="text-[#e9ddcf]"> </span>
-          <span className="text-[#9cdcfe]">{attribute.name}</span>
-          <span className="text-[#d4d4d4]">{attribute.equal}</span>
-          <span className="text-[#ce9178]">{attribute.value}</span>
-        </span>
-      ))}
-      {isSelfClosing || selfClosingMarker ? <span className="text-[#808080]"> /</span> : null}
-      <span className="text-[#808080]">{">"}</span>
-    </span>
-  );
-}
-
-function renderCssCode(code) {
-  const lines = code.split("\n");
-
-  return (
-    <code className="block">
-      {lines.map((line, lineIndex) => {
-        const trimmed = line.trim();
-        const indent = line.match(/^\s*/)?.[0] || "";
-
-        if (!trimmed) {
-          return (
-            <div key={`${lineIndex}-empty`} className="whitespace-pre">
-              {line}
-            </div>
-          );
-        }
-
-        if (trimmed.endsWith("{")) {
-          const selector = trimmed.slice(0, -1).trim();
-          return (
-            <div key={`${lineIndex}-${line}`} className="whitespace-pre">
-              <span className="text-[#e9ddcf]">{indent}</span>
-              <span className="text-[#d7ba83]">{selector}</span>
-              <span className="text-[#808080]"> {"{"}</span>
-            </div>
-          );
-        }
-
-        if (trimmed === "}") {
-          return (
-            <div key={`${lineIndex}-${line}`} className="whitespace-pre">
-              <span className="text-[#e9ddcf]">{indent}</span>
-              <span className="text-[#808080]">{"}"}</span>
-            </div>
-          );
-        }
-
-        const propertyMatch = trimmed.match(/^([-\w]+)(:\s*)(.+?)(;?)$/);
-        if (propertyMatch) {
-          return (
-            <div key={`${lineIndex}-${line}`} className="whitespace-pre">
-              <span className="text-[#e9ddcf]">{indent}</span>
-              <span className="text-[#9cdcfe]">{propertyMatch[1]}</span>
-              <span className="text-[#d4d4d4]">{propertyMatch[2]}</span>
-              <span className="text-[#ce9178]">{propertyMatch[3]}</span>
-              <span className="text-[#808080]">{propertyMatch[4]}</span>
-            </div>
-          );
-        }
-
-        return (
-          <div key={`${lineIndex}-${line}`} className="whitespace-pre text-[#e9ddcf]">
-            {line}
-          </div>
-        );
-      })}
-    </code>
-  );
-}
-
-function renderJavascriptCode(code) {
-  const lines = code.split("\n");
-
-  return (
-    <code className="block">
-      {lines.map((line, lineIndex) => {
-        const parts = line.split(/("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g);
-
-        return (
-          <div key={`${lineIndex}-${line}`} className="whitespace-pre">
-            {parts.map((part, partIndex) => {
-              if (!part) {
-                return null;
-              }
-
-              if (/^("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')$/.test(part)) {
-                return (
-                  <span key={`${partIndex}-${part}`} className="text-[#ce9178]">
-                    {part}
-                  </span>
-                );
-              }
-
-              const tokens = part.split(/\b(const|let|if|else|true|false|prompt|console)\b/g);
-
-              return tokens.map((token, tokenIndex) => {
-                if (!token) {
-                  return null;
-                }
-
-                if (/^(const|let|if|else|true|false)$/.test(token)) {
-                  return (
-                    <span key={`${partIndex}-${tokenIndex}-${token}`} className="text-[#c586c0]">
-                      {token}
-                    </span>
-                  );
-                }
-
-                if (/^(prompt|console)$/.test(token)) {
-                  return (
-                    <span key={`${partIndex}-${tokenIndex}-${token}`} className="text-[#4ec9b0]">
-                      {token}
-                    </span>
-                  );
-                }
-
-                const subTokens = token.split(/(\b\d+\b)/g);
-
-                return subTokens.map((subToken, subIndex) => {
-                  if (!subToken) {
-                    return null;
-                  }
-
-                  if (/^\d+$/.test(subToken)) {
-                    return (
-                      <span key={`${partIndex}-${tokenIndex}-${subIndex}-${subToken}`} className="text-[#b5cea8]">
-                        {subToken}
-                      </span>
-                    );
-                  }
-
-                  return (
-                    <span key={`${partIndex}-${tokenIndex}-${subIndex}-${subToken}`} className="text-[#e9ddcf]">
-                      {subToken}
-                    </span>
-                  );
-                });
-              });
-            })}
-          </div>
-        );
-      })}
-    </code>
-  );
-}
-
-function renderCode(code, trackId) {
   if (trackId === "css") {
-    return renderCssCode(code);
+    return "bg-[#264DE4] text-white";
   }
 
-  if (trackId === "javascript") {
-    return renderJavascriptCode(code);
-  }
-
-  const lines = code.split("\n");
-
-  return (
-    <code className="block">
-      {lines.map((line, lineIndex) => {
-        const parts = line.split(/(<\/?[^>]+>)/g);
-
-        return (
-          <div key={`${lineIndex}-${line}`} className="whitespace-pre">
-            {parts.map((part, partIndex) => {
-              if (/^\s*<!DOCTYPE/i.test(part) || /^(\s*)<\/?[^>]+>$/.test(part)) {
-                return renderHtmlTag(part, `${partIndex}-${part}`);
-              }
-
-              return (
-                <span key={`${partIndex}-${part}`} className="text-[#e9ddcf]">
-                  {part}
-                </span>
-              );
-            })}
-          </div>
-        );
-      })}
-    </code>
-  );
+  return "bg-[#F7DF1E] text-black";
 }
 
-function getPreviewFileName(trackId) {
-  if (trackId === "css") {
-    return "style.css";
-  }
-
-  if (trackId === "javascript") {
-    return "script.js";
-  }
-
-  return "index.html";
-}
-
-export default function Tasks({ user, progressVersion, onStartActivity }) {
-  const [selectedTrack, setSelectedTrack] = useState("html");
-  const [selectedItemId, setSelectedItemId] = useState("html-1");
+export default function Tasks({ user, progressVersion, initialTrackId, onOpenTrack }) {
   const tracksWithProgress = useMemo(() => getTracksWithProgress(tracks, user), [progressVersion, user]);
 
-  const currentTrack = useMemo(
-    () => tracksWithProgress.find((track) => track.id === selectedTrack) || tracksWithProgress[0],
-    [selectedTrack, tracksWithProgress]
-  );
+  const overallProgress = useMemo(() => {
+    const totals = tracksWithProgress.reduce(
+      (acc, track) => {
+        acc.total += track.items.length;
+        acc.completed += track.items.filter((item) => item.status === "done").length;
+        return acc;
+      },
+      { total: 0, completed: 0 }
+    );
 
-  const selectedItem = useMemo(
-    () => currentTrack.items.find((item) => item.id === selectedItemId) || currentTrack.items[0],
-    [currentTrack, selectedItemId]
-  );
-
-  const handleTrackChange = (trackId) => {
-    const nextTrack = tracksWithProgress.find((track) => track.id === trackId);
-    setSelectedTrack(trackId);
-    setSelectedItemId(nextTrack?.items[0]?.id || "");
-  };
+    return {
+      ...totals,
+      percent: totals.total ? Math.round((totals.completed / totals.total) * 100) : 0
+    };
+  }, [tracksWithProgress]);
 
   return (
     <section className="page-enter space-y-6">
-      <div className="interactive-card surface-enter rounded-[2rem] border border-black/10 bg-[#221d19] px-6 py-6 text-[#f5efe6] shadow-[0_20px_60px_rgba(34,29,25,0.24)] sm:px-8">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+      <div className="surface-enter overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(135deg,rgba(80,80,80,0.18),rgba(20,20,20,0.96)_45%,rgba(0,0,0,0.98))] shadow-[0_24px_80px_rgba(0,0,0,0.5)]">
+        <div className="grid gap-6 px-6 py-8 sm:px-8">
           <div>
-            <p className="text-xs uppercase tracking-[0.28em] text-[#c7b7a3]">Roadmaps</p>
-            <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
-              {user?.name ? `${user.name}, escolha sua trilha.` : "Escolha sua trilha."}
+            <p className="text-xs uppercase tracking-[0.32em] text-[#b5b5b5]">Minuto Academy</p>
+            <h2 className="mt-4 max-w-3xl text-4xl font-semibold text-white sm:text-5xl">
+              {user?.name ? `${user.name}, escolha seu proximo curso.` : "Escolha seu proximo curso."}
             </h2>
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-[#d8ccbf]">
-              Desenvolva sua jornada de aprendizado por trilhas e avance passo a passo.
+            <p className="mt-4 max-w-2xl text-base leading-8 text-[#cbd5e1]">
+              Cada trilha foi pensada para guiar seu aprendizado do basico ate atividades mais completas, sempre em pequenos passos.
             </p>
+
+            <div className="mt-8 grid gap-4 sm:grid-cols-3">
+              <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
+                <p className="text-sm text-[#94a3b8]">Progresso geral</p>
+                <p className="mt-3 text-3xl font-semibold text-white">{overallProgress.percent}%</p>
+                <p className="mt-2 text-sm text-[#cbd5e1]">
+                  {overallProgress.completed}/{overallProgress.total} aulas concluidas
+                </p>
+              </div>
+              <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
+                <p className="text-sm text-[#94a3b8]">Trilhas disponiveis</p>
+                <p className="mt-3 text-3xl font-semibold text-white">{tracksWithProgress.length}</p>
+                <p className="mt-2 text-sm text-[#cbd5e1]">Escolha entre HTML, CSS e JavaScript</p>
+              </div>
+              <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
+                <p className="text-sm text-[#94a3b8]">Retome de onde parou</p>
+                <p className="mt-3 text-lg font-semibold text-white">
+                  {initialTrackId ? tracksWithProgress.find((track) => track.id === initialTrackId)?.label || "Sua ultima trilha" : "Sua ultima trilha"}
+                </p>
+                <p className="mt-2 text-sm text-[#cbd5e1]">Ao abrir uma trilha, voce entra direto na pagina completa do modulo.</p>
+              </div>
+            </div>
           </div>
 
-          <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-[#cdbdaa]">
-            3 trilhas disponíveis
-          </div>
-        </div>
-
-        <div className="mt-6 flex flex-wrap gap-3">
-          {tracksWithProgress.map((track) => {
-            const active = track.id === currentTrack.id;
-
-            return (
-              <button
-                key={track.id}
-                type="button"
-                onClick={() => handleTrackChange(track.id)}
-                className={`glass-button rounded-full px-5 py-3 text-sm font-medium transition ${
-                  active
-                    ? `bg-gradient-to-r ${track.accent} text-[#1e1915]`
-                    : "border border-white/10 bg-white/5 text-[#e4dacd] hover:bg-white/10"
-                }`}
-              >
-                {track.label}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_minmax(360px,0.8fr)]">
-        <div className="interactive-card surface-enter surface-enter-delay-1 h-full rounded-[2rem] border border-black/10 bg-[#1d1916] p-3 shadow-[0_20px_60px_rgba(34,29,25,0.24)]">
-          <div className="rounded-[1.4rem] border border-white/5 bg-[#28221e] px-5 py-4 text-[#f5efe6]">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div className="rounded-[1.75rem] border border-white/10 bg-[#141414] p-5">
+            <div className="flex items-center justify-between gap-3">
               <div>
-                <p className={`text-xs uppercase tracking-[0.22em] ${currentTrack.accentText}`}>{currentTrack.label}</p>
-                <h3 className="mt-1 text-2xl font-semibold">{currentTrack.subtitle}</h3>
+                <p className="text-xs uppercase tracking-[0.24em] text-[#b5b5b5]">Escolha sua trilha</p>
+                <h3 className="mt-2 text-2xl font-semibold text-white">Meus cursos</h3>
               </div>
-              <div className="text-sm text-[#b8aa99]">{currentTrack.items.length} atividades.</div>
+              <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[#cbd5e1]">
+                {tracksWithProgress.length} trilhas
+              </span>
             </div>
-          </div>
 
-          <div className="mt-3 space-y-2">
-            {currentTrack.items.map((item) => {
-              const active = item.id === selectedItem.id;
+            <div className="mt-5 grid gap-4 lg:grid-cols-2">
+              {tracksWithProgress.map((track) => {
+                const stats = getTrackStats(track);
+                const illustration = track.id === "html" ? "<html>" : track.id === "css" ? "{ }" : "JS";
 
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => setSelectedItemId(item.id)}
-                  className={`interactive-row grid w-full grid-cols-2 gap-3 rounded-2xl px-4 py-4 text-left transition sm:grid-cols-[minmax(0,1fr)_90px_80px_100px] sm:items-center sm:px-5 ${
-                    active
-                      ? "bg-[#332c27] text-[#fffaf2]"
-                      : "bg-[#241f1b] text-[#e4dacd] hover:bg-[#2c2622]"
-                  }`}
-                >
-                  <div className="col-span-2 min-w-0 sm:col-span-1">
-                    <p className="truncate text-base font-semibold">{item.title}</p>
-                  </div>
-                  <div className="text-sm text-[#c2b09b] sm:text-right">{item.acceptance}</div>
-                  <div className={`text-sm font-semibold ${getDifficultyColor(item.difficulty)} sm:text-left`}>
-                    {item.difficulty}
-                  </div>
-                  <div className="col-span-2 flex justify-start sm:col-span-1 sm:justify-end">
-                    <span
-                      className={`rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] ${getStatusClasses(item.status)}`}
-                    >
-                      {getStatusLabel(item.status)}
-                    </span>
-                  </div>
-                </button>
-              );
-            })}
+                return (
+                  <button
+                    key={track.id}
+                    type="button"
+                    onClick={() => onOpenTrack?.(track.id)}
+                    className="interactive-card w-full rounded-[1.6rem] border border-white/10 bg-[#1a1a1a] p-5 text-left hover:bg-[#202020]"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <p className="text-sm text-[#9ca3af]">{track.duration}</p>
+                        <p className="mt-6 text-sm font-semibold uppercase tracking-[0.18em] text-[#f59e0b]">Curso</p>
+                        <p className="mt-2 text-2xl font-semibold text-white">{track.label}</p>
+                        <p className="mt-2 text-sm text-[#94a3b8]">{track.description}</p>
+                      </div>
+                      <div className={`grid h-24 w-24 place-items-center rounded-full text-2xl font-semibold ${getTrackIconClasses(track.id)}`}>
+                        {illustration}
+                      </div>
+                    </div>
+                    <div className="mt-6 flex items-center justify-between text-sm text-[#d1d5db]">
+                      <span>{stats.percent}% completo</span>
+                      <span>{stats.completed}/{stats.total}</span>
+                    </div>
+                    <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/10">
+                      <div
+                        className="h-full rounded-full bg-gradient-to-r from-[#3da9fc] to-[#2563eb]"
+                        style={{ width: `${stats.percent}%` }}
+                      />
+                    </div>
+                    <div className="mt-5 flex items-center justify-between">
+                      <span className="text-sm text-[#cbd5e1]">{track.subtitle}</span>
+                      <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-black">
+                        Abrir trilha
+                      </span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
-
-        <article className="interactive-card surface-enter surface-enter-delay-2 flex min-h-[42rem] flex-col rounded-[2rem] border border-black/10 bg-[#231e1a] p-6 text-[#f5efe6] shadow-[0_20px_60px_rgba(34,29,25,0.24)]">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className={`rounded-full bg-gradient-to-r ${currentTrack.accent} px-3 py-1 text-xs font-semibold text-[#1e1915]`}>
-              {currentTrack.label}
-            </span>
-            <span className={`rounded-full bg-white/5 px-3 py-1 text-xs font-semibold ${getDifficultyColor(selectedItem.difficulty)}`}>
-              {selectedItem.difficulty}
-            </span>
-            <span className={`rounded-full px-3 py-1 text-xs font-semibold ${getStatusClasses(selectedItem.status)}`}>
-              {getStatusLabel(selectedItem.status)}
-            </span>
-          </div>
-
-          <div className="mt-5 min-h-[5.5rem]">
-            <h3 className="text-3xl font-semibold leading-tight">{selectedItem.title}</h3>
-          </div>
-
-          <section className="mt-3 min-h-[7rem]">
-            <h4 className="text-lg font-semibold">Resumo rápido</h4>
-            <p className="mt-3 text-sm leading-6 text-[#ddd1c5]">{selectedItem.summary}</p>
-          </section>
-
-          <section className="mt-8 flex-1">
-            <h4 className="text-lg font-semibold">Preview</h4>
-            <div className="code-shell mt-3 overflow-hidden rounded-2xl border border-white/5 bg-[#181411]">
-              <div className="flex items-center justify-between border-b border-white/5 bg-[#211b17] px-4 py-3">
-                <div className="flex items-center gap-2">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#ff6f61]" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#f5c04f]" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#67c587]" />
-                </div>
-                <span className="text-xs font-medium tracking-[0.18em] text-[#bfae99]">
-                  {getPreviewFileName(currentTrack.id)}
-                </span>
-              </div>
-              <pre className="min-h-[18rem] overflow-auto p-4 text-sm leading-6 text-[#e9ddcf]">
-                {renderCode(selectedItem.code, currentTrack.id)}
-              </pre>
-            </div>
-          </section>
-
-          <div className="mt-8 flex flex-wrap gap-3 pt-2">
-            <button
-              type="button"
-              className={`glass-button rounded-full px-5 py-3 text-sm font-semibold transition ${
-                selectedItem.status === "locked"
-                  ? "cursor-not-allowed bg-white/10 text-[#978877]"
-                  : `bg-gradient-to-r ${currentTrack.accent} text-[#1e1915] hover:opacity-90`
-              }`}
-              disabled={selectedItem.status === "locked"}
-              onClick={() => onStartActivity?.(currentTrack, selectedItem)}
-            >
-              {selectedItem.status === "done"
-                ? "Revisar atividade"
-                : selectedItem.status === "locked"
-                  ? "Desbloqueie etapas anteriores."
-                  : "Começar atividade"}
-            </button>
-
-            <div className="rounded-full border border-white/10 px-4 py-3 text-sm text-[#baa997]">
-              Taxa de acerto: {selectedItem.acceptance}.
-            </div>
-          </div>
-        </article>
       </div>
     </section>
   );

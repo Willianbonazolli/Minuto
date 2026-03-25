@@ -41,19 +41,19 @@ O progresso é salvo automaticamente, permitindo que o usuário retorne a qualqu
 minuto/ <br>
 ├── frontend/ <br>
 │ ├── src/ <br>
-│ │ ├── components/
+│ │ ├── components/<br>
 │ │ ├── pages/
 │ │ ├── services/
-│ │ └── styles/
+│ │ └── styles/<br>
 │ ├── index.html <br> 
 │ └── package.json <br>
 │
 ├── backend/ <br>
 │ ├── src/ <br>
-│ │ ├── controllers/
+│ │ ├── controllers/<br>
 │ │ ├── models/
 │ │ ├── routes/
-│ │ └── middleware/
+│ │ └── middleware/<br>
 │ ├── migrations/ <br> 
 │ └── package.json <br>
 │
@@ -81,22 +81,24 @@ Configure as variáveis de ambiente do backend
 Crie um arquivo .env no diretório backend com o seguinte conteúdo:
 
 text
-DATABASE_URL=postgresql://usuario:senha@localhost:5432/minuto
-JWT_SECRET=minha_chave_secreta_aqui
-PORT=3333
+DATABASE_URL=postgresql://usuario:senha@localhost:5132/minuto
+JWT_SECRET=senha_aqui
+PORT= escolha sua porta
+
 Execute as migrations
 
-bash
 cd backend
 npm install
 npm run migrate
+
 Inicie o servidor backend
 
-bash
 npm run dev
+
 Em outro terminal, configure e inicie o frontend
 
-bash
 cd frontend
 npm install
 npm run dev
+
+Prontinho só acessar o local host

@@ -4,7 +4,7 @@
 
 ## Sobre o projeto
 
-O Minuto é uma proposta de um trabalho da Faculdade, onde teriamos que lecionar uma aula sobre devido tema. Minha ideia foi que aprender programação pode ser menos intimidador quando o conteúdo é dividido em pequenas partes. O nome é uma referência direta a essa proposta: atividades curtas, objetivas e que respeitam o ritmo de cada pessoa.
+A Minuto é uma proposta de um trabalho da Faculdade, onde teriamos que lecionar uma aula sobre devido tema. Minha ideia foi que aprender programação pode ser menos intimidador quando o conteúdo é dividido em pequenas partes. O nome é uma referência direta a essa proposta: atividades curtas, objetivas e que respeitam o ritmo de cada pessoa.
 
 A plataforma organiza o aprendizado em trilhas, onde cada atividade precisa ser concluída antes da próxima ser liberada.
 

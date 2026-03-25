@@ -3,9 +3,15 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
-  font-family: "Trebuchet MS", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: dark;
+  font-family: "Sora", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --bg-deep: #020617;
+  --bg-surface: #081121;
+  --bg-panel: #0f172a;
+  --border-soft: rgba(148, 163, 184, 0.16);
+  --text-main: #f8fafc;
+  --text-soft: #94a3b8;
 }
 
 * {
@@ -20,22 +26,23 @@ body {
   min-height: 100vh;
   margin: 0;
   background:
-    radial-gradient(circle at top left, rgba(199, 154, 104, 0.16), transparent 26%),
-    radial-gradient(circle at top right, rgba(123, 143, 157, 0.12), transparent 22%),
-    linear-gradient(180deg, #f6efe7 0%, #efe4d7 100%);
-  color: #111111;
+    radial-gradient(circle at top left, rgba(80, 80, 80, 0.22), transparent 22%),
+    radial-gradient(circle at top right, rgba(60, 60, 60, 0.22), transparent 24%),
+    radial-gradient(circle at bottom center, rgba(20, 20, 20, 0.75), transparent 42%),
+    linear-gradient(180deg, #000000 0%, #141414 48%, #282828 100%);
+  color: var(--text-main);
   overflow-x: hidden;
 }
 
 body::before {
   content: "";
   position: fixed;
-  inset: -20% auto auto -10%;
-  width: 32rem;
-  height: 32rem;
+  inset: -12% auto auto -6%;
+  width: 30rem;
+  height: 30rem;
   border-radius: 9999px;
-  background: radial-gradient(circle, rgba(231, 199, 159, 0.18) 0%, rgba(231, 199, 159, 0) 70%);
-  filter: blur(12px);
+  background: radial-gradient(circle, rgba(80, 80, 80, 0.3) 0%, rgba(80, 80, 80, 0) 70%);
+  filter: blur(14px);
   pointer-events: none;
   animation: ambientFloat 18s var(--ease-out-soft) infinite alternate;
   z-index: 0;
@@ -44,12 +51,12 @@ body::before {
 body::after {
   content: "";
   position: fixed;
-  inset: auto -8% 8% auto;
-  width: 28rem;
-  height: 28rem;
+  inset: auto -10% 12% auto;
+  width: 34rem;
+  height: 34rem;
   border-radius: 9999px;
-  background: radial-gradient(circle, rgba(123, 143, 157, 0.14) 0%, rgba(123, 143, 157, 0) 72%);
-  filter: blur(14px);
+  background: radial-gradient(circle, rgba(60, 60, 60, 0.3) 0%, rgba(60, 60, 60, 0) 72%);
+  filter: blur(16px);
   pointer-events: none;
   animation: ambientFloatReverse 22s var(--ease-out-soft) infinite alternate;
   z-index: 0;
@@ -69,8 +76,8 @@ textarea {
 }
 
 ::selection {
-  background: rgba(199, 154, 104, 0.28);
-  color: #2c221b;
+  background: rgba(56, 189, 248, 0.32);
+  color: white;
 }
 
 .page-enter {
@@ -129,11 +136,11 @@ textarea {
 
 .glass-button:hover {
   transform: translateY(-1px);
-  filter: brightness(1.03);
+  filter: brightness(1.04);
 }
 
 .glass-button:focus-visible {
-  outline: 2px solid rgba(231, 199, 159, 0.55);
+  outline: 2px solid rgba(56, 189, 248, 0.55);
   outline-offset: 2px;
 }
 
@@ -147,7 +154,7 @@ textarea {
   inset: 0 auto auto 0;
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, rgba(231, 199, 159, 0.45), transparent 70%);
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.35), transparent 70%);
 }
 
 @keyframes pageEnter {

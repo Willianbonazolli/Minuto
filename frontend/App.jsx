@@ -213,7 +213,7 @@ export default function App() {
               <div>
                 <p className="text-xs uppercase tracking-[0.3em] text-[#ffffff]">Sobre</p>
                 <h2 className="mt-3 text-2xl font-semibold sm:text-3xl">
-                  Uma plataforma simples para aprender programaÃ§Ã£o.
+                  Uma plataforma simples para aprender programação.
                 </h2>
               </div>
               <button
@@ -227,13 +227,13 @@ export default function App() {
 
             <div className="mt-6 space-y-4 text-sm leading-7 text-[#cfcfcf] sm:text-base">
               <p>
-                O Minuto Ã© uma plataforma educacional gratuita voltada ao ensino inicial de programaÃ§Ã£o.
+                O Minuto é uma plataforma educacional gratuita voltada ao ensino inicial de programação.
               </p>
               <p>
-                Aqui, o conteÃºdo estÃ¡ organizado em trilhas, com atividades sequenciais para vocÃª aprender aos poucos e praticar no prÃ³prio site.
+                Aqui, o conteúdo está organizado em trilhas, com atividades sequenciais para você aprender aos poucos e praticar no próprio site.
               </p>
               <p>
-                A proposta Ã© ajudar iniciantes a entender conceitos essenciais, como estrutura de pÃ¡ginas, estilos, variÃ¡veis, operadores e condicionais, de forma simples, visual e progressiva.
+                A proposta é ajudar iniciantes a entender conceitos essenciais, como estrutura de páginas, estilos, variáveis, operadores e condicionais, de forma simples, visual e progressiva.
               </p>
             </div>
           </div>

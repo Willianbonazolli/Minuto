@@ -38,26 +38,26 @@ O progresso é salvo automaticamente, permitindo que o usuário retorne a qualqu
 ---
 
 ## Estrutura do projeto
-minuto/
-├── frontend/
-│ ├── src/
+minuto/ <br>
+├── frontend/ <br>
+│ ├── src/ <br>
 │ │ ├── components/
 │ │ ├── pages/
 │ │ ├── services/
 │ │ └── styles/
-│ ├── index.html
-│ └── package.json
+│ ├── index.html <br> 
+│ └── package.json <br>
 │
-├── backend/
-│ ├── src/
+├── backend/ <br>
+│ ├── src/ <br>
 │ │ ├── controllers/
 │ │ ├── models/
 │ │ ├── routes/
 │ │ └── middleware/
-│ ├── migrations/
-│ └── package.json
+│ ├── migrations/ <br> 
+│ └── package.json <br>
 │
-└── README.md
+└── README.md <br>
 
 ---
 
@@ -71,7 +71,7 @@ minuto/
 
 ### Passos
 
-1. Clone o repositório
+Clone o repositório
 
 ```bash
 git clone https://github.com/seu-usuario/minuto.git

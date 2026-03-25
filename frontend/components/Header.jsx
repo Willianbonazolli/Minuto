@@ -12,14 +12,14 @@
             Curso de Introdução a Programação
           </h1>
           <p className="mt-2 max-w-2xl text-sm text-[#9f9f9f]">
-            Plataforma gratuita com aulas teÃ³ricas e exercÃ­cios prÃ¡ticos para iniciantes.
+            Plataforma gratuita com aulas teóricas e exercícios práticos para iniciantes.
           </p>
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           {isAuthed && user?.name ? (
             <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-[#cfcfcf]">
-              OlÃ¡, <strong className="font-semibold text-white">{user.name}</strong>
+              Olá, <strong className="font-semibold text-white">{user.name}</strong>
             </div>
           ) : null}
 

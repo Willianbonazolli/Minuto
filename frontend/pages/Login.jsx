@@ -42,7 +42,7 @@ export default function Login({ onSwitch, onSuccess }) {
           Entre para acompanhar seu progresso.
         </h2>
         <p className="mt-4 max-w-lg text-[#cfcfcf]">
-          Aprenda no seu ritmo, acompanhe sua evoluÃ§Ã£o e avance atividade por atividade em um ambiente de estudo mais moderno.
+          Aprenda no seu ritmo, acompanhe sua evolução e avance atividade por atividade em um ambiente de estudo mais moderno.
         </p>
         <div className="mt-8 grid gap-3 sm:grid-cols-2">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
@@ -50,7 +50,7 @@ export default function Login({ onSwitch, onSuccess }) {
             <p className="mt-2 text-sm text-[#cfcfcf]">Veja seus modulos, aulas concluidas e proximas aulas.</p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <p className="text-sm font-medium text-white">Editor de cÃ³digo personalizado</p>
+            <p className="text-sm font-medium text-white">Editor de código personalizado</p>
             <p className="mt-2 text-sm text-[#cfcfcf]">Acompanhe o resultado ao vivo na mesma tela.</p>
           </div>
         </div>

@@ -66,7 +66,7 @@ minuto/ <br>
 ### Pré-requisitos
 
 - Node.js (versão 18 ou superior)
-- PostgreSQL (ou conta no Neon)
+- PostgreSQL 
 - npm ou yarn
 
 ### Passos

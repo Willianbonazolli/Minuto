@@ -14,13 +14,13 @@ Atualmente, o projeto está em fase de desenvolvimento e conta com 3 trilhas ini
 
 ## Como funciona
 
-O usuário se cadastra e escolhe uma trilha de aprendizado. Dentro de cada trilha, as atividades são apresentadas em sequência. Cada atividade contém:
+O usuário se cadastra e escolhe um tipo de linguagem para aprendizado. Dentro de cada trilha, as atividades são apresentadas em sequência. Cada atividade contém:
 
 - Instruções passo a passo (em desenvolvimento)
 - Um editor de código integrado (em desenvolvimento)
 - Uma taxa de acerto da comunidade como referência
 
-O progresso é salvo automaticamente, permitindo que o usuário retorne a qualquer momento de onde parou.
+Ainda estou trabalhando para melhorar cada atividade individualmente
 
 ---
 

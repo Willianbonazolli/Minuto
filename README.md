@@ -24,79 +24,11 @@ Ainda estou trabalhando para melhorar cada atividade individualmente
 
 ---
 
-## Tecnologias utilizadas
+Acesse:
 
-| Frontend | React com Vite | <br>
-| Estilização | Tailwind CSS | <br>
-| Backend | Node.js com Express | <br>
-| Banco de dados | PostgreSQL | <br>
-| Autenticação | JWT | <br>
-| Deploy | Vercel (frontend) + Railway (backend) + Neon (banco de dados) | <br>
+Acesse aqui: https://minuto-hazel.vercel.app
 
----
+Observação: O projeto está hospedado em um plano gratuito, assim como o banco de dados PostgreSQL na Railway. Portanto, a velocidade pode ser um pouco limitada.
 
-## Estrutura do projeto
-minuto/ <br>
-├── frontend/ <br>
-│ ├── src/ <br>
-│ │ ├── components/<br>
-│ │ ├── pages/<br>
-│ │ ├── services/ <br>
-│ │ └── styles/<br>
-│ ├── index.html <br> 
-│ └── package.json <br>
-│
-├── backend/ <br>
-│ ├── src/ <br>
-│ │ ├── controllers/<br>
-│ │ ├── models/ <br>
-│ │ ├── routes/ <br>
-│ │ └── middleware/<br>
-│ ├── migrations/ <br> 
-│ └── package.json <br>
-│
-└── README.md <br>
+Nota: Por favor, me contate se houver algum erro, ou se for impossível acessar o website, eu vou tomar as providências.
 
----
-
-## Como executar localmente
-
-### Pré-requisitos
-
-- Node.js (versão 18 ou superior)
-- PostgreSQL 
-- npm ou yarn
-
-### Passos
-
-Clone o repositório
-
-```bash
-git clone https://github.com/seu-usuario/minuto.git
-cd minuto
-Configure as variáveis de ambiente do backend
-
-Crie um arquivo .env no diretório backend com o seguinte conteúdo:
-
-text
-DATABASE_URL=postgresql://usuario:senha@localhost:5132/minuto
-JWT_SECRET=senha_aqui
-PORT= escolha sua porta
-
-Execute as migrations
-
-cd backend
-npm install
-npm run migrate
-
-Inicie o servidor backend
-
-npm run dev
-
-Em outro terminal, configure e inicie o frontend
-
-cd frontend
-npm install
-npm run dev
-
-Prontinho só acessar o local host
